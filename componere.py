@@ -1,9 +1,10 @@
 import os
 import sys
 import signal
-from src.ApplicationWindow import ApplicationWindow
+from src.ComponereWindow import ComponereWindow
 from PyQt6.QtCore import QFileSystemWatcher
 from PyQt6.QtWidgets import QApplication
+from PyQt6.QtGui import QIcon
 
 
 app = QApplication(sys.argv)
@@ -12,10 +13,11 @@ watcher = QFileSystemWatcher(files)
 watcher.addPaths(files)
 
 if __name__ == "__main__":
-    app.setApplicationName("Application Template")
+    app.setApplicationName("Componere")
     app.setApplicationVersion("0.0.1")
     app.setOrganizationName("Vasak Group")
-    window = ApplicationWindow(app)
+    app.setWindowIcon(QIcon.fromTheme("calamares"))
+    window = ComponereWindow(app)
     window.show()
     watcher.fileChanged.connect(window.load_ui_config)
     signal.signal(signal.SIGINT, signal.SIG_DFL)  # Habilitar Ctrl+C

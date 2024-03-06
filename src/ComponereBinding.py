@@ -1,7 +1,7 @@
 import os
 from PyQt6.QtCore import pyqtSlot, QObject, Qt
 
-class ApplicationBinding(QObject):
+class ComponereBinding(QObject):
   def __init__(self, window, app):
     super().__init__()
     self.window = window

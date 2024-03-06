@@ -1,14 +1,14 @@
 import os
 from Vasak.VSKWindow import VSKWindow
 from Vasak.system.VSKConfigManager import VSKConfigManager
-from src.ApplicationBinding import ApplicationBinding
+from src.ComponereBinding import ComponereBinding
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt, QFileSystemWatcher
+from PyQt6.QtCore import Qt
 
-class ApplicationWindow(VSKWindow):
+class ComponereWindow(VSKWindow):
     def __init__(self, app: QApplication):
         super().__init__()
-        self.shareObject = ApplicationBinding(self, app)
+        self.shareObject = ComponereBinding(self, app)
         self.configManager = VSKConfigManager()
         self.channel.registerObject("vsk", self.shareObject)
         self.load_html("ui/dist/index.html") # Cargar un HTML en el WebView

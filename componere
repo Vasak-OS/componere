@@ -1,6 +1,6 @@
 #!/bin/bash
-path="/usr/share/application-template/application-template.py"
-echo "Starting Application Template..."
+path="/usr/share/componere/componere.py"
+echo "Starting Componere..."
 echo "Path: $path"
 echo "Dev: $1"
 echo "----------------------"
