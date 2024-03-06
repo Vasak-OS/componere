@@ -1,30 +1,28 @@
-# Application Template
+# Componere
 
 This is a template for a simple application for VSK Apps. It is based on the Python, Vue.js and TypeScript.
 
 ## Dependencies
 
-Application template depends on the following packages:
+Componere depends on the following packages:
 
-* [Bootstrap](https://getbootstrap.com/) ([libvasak-bootstrap](https://github.com/Vasak-OS/PKGBUILDS/blob/main/libvasak-bootstrap/PKGBUILD))
 * [libvasak-ui](https://github.com/Vasak-OS/PKGBUILDS/blob/main/libvasak-ui/PKGBUILD)
-* [hydriam-data](https://github.com/Vasak-OS/PKGBUILDS/blob/main/hydriam-data/PKGBUILD)
 * [python-libvasak](https://github.com/Vasak-OS/PKGBUILDS/blob/main/python-libvasak/PKGBUILD)
 
-## Start Application Template
+## Start Componere
 
 To start Application, run the following steps:
 
 1. Clone the repository
 
 ```bash
-git clone git@github.com:Vasak-OS/application-template.git
+git clone git@github.com:Vasak-OS/componere.git
 ```
 
 2. Move to the directory
 
 ```bash
-cd application-template
+cd componere
 ```
 
 3. Install dependencies and Build UI
@@ -39,8 +37,8 @@ cd ..
 4. Start Application
 
 ```bash
-python application-template.py --webEngineArgs --remote-debugging-port=3030 --remote-allow-origins=http://127.0.0.1:3030 # --debug
-python application-template.py # normal mode
+python componere.py --webEngineArgs --remote-debugging-port=3030 --remote-allow-origins=http://127.0.0.1:3030 # --debug
+python componere.py # normal mode
 ```
 
 ## PKGBUILD Template
@@ -48,7 +46,7 @@ python application-template.py # normal mode
 ```conf
 # Maintainer: Your Name <your_email@domain>
 
-pkgname=application-template
+pkgname=componere
 pkgver=0.0.1
 pkgrel=1
 pkgdesc="PKGBUILD template for VSK Apps"
@@ -83,6 +81,6 @@ package() {
 
 ## Contributors
 
-<a href="https://github.com/vasak-os/application-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=vasak-os/application-template" />
+<a href="https://github.com/vasak-os/componere/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=vasak-os/componere" />
 </a>
