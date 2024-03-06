@@ -1,11 +1,13 @@
 import os
 from PyQt6.QtCore import pyqtSlot, QObject, Qt
+from Vasak.system.VSKIconManager import VSKIconManager
 
 class ComponereBinding(QObject):
   def __init__(self, window, app):
     super().__init__()
     self.window = window
     self.app = app
+    self.iconManager = VSKIconManager()
 
   @pyqtSlot(result=str)
   def getHome(self):
@@ -15,6 +17,10 @@ class ComponereBinding(QObject):
         home_path = os.path.join("/", home_path)
 
       return home_path
+  
+  @pyqtSlot(str, result=str)
+  def getIcon(self, name):
+    return self.iconManager.get_icon(name)
   
   # Don't remove this method, it's used for VSK Window
   @pyqtSlot()
