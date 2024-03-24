@@ -2,8 +2,10 @@
 import { inject, onMounted, ref, computed } from 'vue';
 import { WindowFrame, SideBar, SideButton } from '@vasakgroup/vue-libvasak';
 import routers from '@/routers/index';
+import type { VSK } from '@/types/VSK';
+import type { VSKRoute } from '@/types/VSKRoute';
 
-const $vsk: any = inject('vsk');
+const $vsk: VSK = inject('vsk') as VSK;
 const icon = ref('');
 const section = ref('WELCOME');
 const routersData = ref(routers);
@@ -18,12 +20,12 @@ const changeSection = (newSection: string) => {
 };
 
 const routerComponent = computed(() => {
-  return routers.find((router: any) => router.tag === section.value)?.component;
+  return routers.find((router: VSKRoute) => router.tag === section.value)?.component;
 });
 
 const getImage = (image: string): Promise<string> => $vsk.getIcon(image);
 
-routersData.value.forEach((router: any) => {
+routersData.value.forEach((router: VSKRoute) => {
   getImage(router.image).then((img: string) => {
     router.image = img;
   });
