@@ -1,6 +1,9 @@
 # Componere
 
-This is a template for a simple application for VSK Apps. It is based on the Python, Vue.js and TypeScript.
+
+![Logo](./icon.svg)
+
+A simple application to install VasakOS in your PC. A guided installation process to install VasakOS in your PC.
 
 ## Dependencies
 
