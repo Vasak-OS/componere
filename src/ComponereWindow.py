@@ -1,4 +1,3 @@
-import os
 from Vasak.VSKWindow import VSKWindow
 from Vasak.system.VSKConfigManager import VSKConfigManager
 from src.ComponereBinding import ComponereBinding
@@ -18,6 +17,8 @@ class ComponereWindow(VSKWindow):
         self.setWindowFlags(
             self.windowFlags() | Qt.WindowType.FramelessWindowHint 
         )
+        self.setGeometry(0, 0, 1000, 680)
+        self.move(QApplication.primaryScreen().availableGeometry().center() - self.rect().center())
 
     def send_Javascript(self, message):
         self.webview.page().runJavaScript(message)
