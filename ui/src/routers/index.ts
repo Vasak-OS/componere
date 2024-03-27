@@ -1,3 +1,5 @@
+import ConfirmView from '@/views/ConfirmView.vue';
+import DisksView from '@/views/DisksView.vue';
 import UserView from '@/views/UserView.vue';
 import WelcomeView from '../views/WelcomeView.vue';
 import type { VSKRoute } from '@/types/VSKRoute';
@@ -14,6 +16,18 @@ const routers: Array<VSKRoute> = [
     image: 'user_icon',
     tag: 'USER',
     component: UserView
+  },
+  {
+    title: 'Disk',
+    image: 'disks',
+    tag: 'DISK',
+    component: DisksView
+  },
+  {
+    title: 'Confirm',
+    image: 'help-info',
+    tag: 'CONFIRM',
+    component: ConfirmView
   }
 ];
 
