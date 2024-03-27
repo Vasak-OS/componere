@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-export const useCounterStore = defineStore('installationConfig', () => {
+export const installationConfigStore = defineStore('installationConfig', () => {
   const config = ref({
     separator: null,
     'additional-repositories': [],
