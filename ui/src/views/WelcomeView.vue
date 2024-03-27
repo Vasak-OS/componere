@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import SlidesComponet from '@/components/SlidesComponet.vue';
-import { ref, onMounted, h } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const timezone = ref('');
 const loading = ref(true);

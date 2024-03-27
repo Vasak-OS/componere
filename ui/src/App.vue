@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, onMounted, ref, computed } from 'vue';
+import { inject, onMounted, ref, computed, type Component } from 'vue';
 import { WindowFrame, SideBar, SideButton } from '@vasakgroup/vue-libvasak';
 import routers from '@/routers/index';
 import type { VSK } from '@/types/VSK';
@@ -19,8 +19,8 @@ const changeSection = (newSection: string) => {
   section.value = newSection;
 };
 
-const routerComponent = computed(() => {
-  return routers.find((router: VSKRoute) => router.tag === section.value)?.component;
+const routerComponent = computed((): Component => {
+  return routers.find((router: VSKRoute) => router.tag === section.value)?.component as Component;
 });
 
 const getImage = (image: string): Promise<string> => $vsk.getIcon(image);
@@ -51,9 +51,7 @@ onMounted(() => {
       </SideBar>
 
       <div class="p-3 col side-content-area">
-        <transition name="slide-fade" mode="out-in" appear>
-          <component :is="routerComponent"></component>
-        </transition>
+        <component :is="routerComponent" />
       </div>
     </div>
   </WindowFrame>
