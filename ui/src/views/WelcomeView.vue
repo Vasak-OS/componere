@@ -32,4 +32,6 @@ onMounted(() => {
     <template v-if="haveInternet"> Tienes internet </template>
     <template v-else> No tienes internet </template>
   </div>
+  <p>{{ timezone }}</p>
+  <button @click="$emit('nextSection')">🢚</button>
 </template>

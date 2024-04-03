@@ -4,10 +4,16 @@ import { installationConfigStore } from '@/stores/installationConfig';
 import type { VSK } from '@/types/VSK';
 
 const $vsk = inject('vsk') as VSK;
+const $emit = defineEmits(['nextSection', 'prevSection']);
 const config = installationConfigStore();
 const image = ref('');
 const username = ref('');
 const password = ref('');
+
+const addUser = () =>{
+  config.setUser(username.value, password.value, true);
+  $emit('nextSection');
+}
 
 onMounted(() => {
   $vsk.getIcon('user_auth').then((img: string) => {
@@ -22,7 +28,7 @@ onMounted(() => {
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form class="space-y-6" @submit="addUser">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
             >Usuario</label
@@ -66,6 +72,9 @@ onMounted(() => {
           </button>
         </div>
       </form>
+
+      <button @click="$emit('prevSection')">🢘</button>
+      <button @click="$emit('nextSection')">🢚</button>
     </div>
   </div>
 </template>

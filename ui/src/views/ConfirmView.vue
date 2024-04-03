@@ -8,4 +8,6 @@ const config = installationConfigStore();
   <h1>Confirm</h1>
 
   {{ config.config }}
+
+  <button @click="$emit('prevSection')">🢘</button>
 </template>
