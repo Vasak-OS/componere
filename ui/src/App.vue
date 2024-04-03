@@ -7,20 +7,15 @@ import type { VSKRoute } from '@/types/VSKRoute';
 
 const $vsk: VSK = inject('vsk') as VSK;
 const icon = ref('');
-const section = ref('WELCOME');
+const section = ref(0);
 const routersData = ref(routers);
 
 const setIcon = async () => {
   icon.value = await $vsk.getIcon('calamares');
 };
 
-const changeSection = (newSection: string) => {
-  console.log('changeSection', newSection);
-  section.value = newSection;
-};
-
 const routerComponent = computed((): Component => {
-  return routers.find((router: VSKRoute) => router.tag === section.value)?.component as Component;
+  return routers[section.value]?.component as Component;
 });
 
 const getImage = (image: string): Promise<string> => $vsk.getIcon(image);
@@ -30,6 +25,14 @@ routersData.value.forEach((router: VSKRoute) => {
     router.image = img;
   });
 });
+
+const nextSection = (): void => {
+  section.value += 1;
+};
+
+const prevSection = (): void => {
+  section.value -= 1;
+};
 
 onMounted(() => {
   $vsk.loadUIConfig();
@@ -46,12 +49,12 @@ onMounted(() => {
           :key="router.tag"
           :title="router.title"
           :image="router.image"
-          @click="changeSection(router.tag)"
+          @click="(): void => {}"
         />
       </SideBar>
 
       <div class="p-3 col side-content-area">
-        <component :is="routerComponent" />
+        <component :is="routerComponent" @nextSection="nextSection" @prevSection="prevSection" />
       </div>
     </div>
   </WindowFrame>

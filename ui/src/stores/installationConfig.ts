@@ -157,6 +157,7 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     version: '2.6.0',
     '!users': []
   });
+  
   function setUser(username:string, password:string, sudo:boolean): void {
     const user = {
       username,
