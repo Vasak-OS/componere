@@ -41,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <WindowFrame title="componere" v-bind:image="icon">
+  <WindowFrame title="Componere" v-bind:image="icon">
     <div class="flex">
       <SideBar>
         <SideButton
