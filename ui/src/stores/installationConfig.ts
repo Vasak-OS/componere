@@ -1,8 +1,9 @@
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { defineStore } from 'pinia';
+import type { InstallationConfig } from '@/types/InstallationConfig';
 
 export const installationConfigStore = defineStore('installationConfig', () => {
-  const config = ref({
+  const config: Ref<InstallationConfig> = ref({
     separator: null,
     'additional-repositories': [],
     'archinstall-language': 'English',
@@ -146,17 +147,23 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     ntp: true,
     offline: false,
     packages: [],
-    'parallel downloads': 0,
+    'parallel downloads': 10,
     profile_config: null,
     save_config: null,
     script: 'guided',
     silent: false,
     swap: true,
     timezone: 'UTC',
-    version: '2.6.0'
+    version: '2.6.0',
+    '!users': []
   });
-  function setUser(): void {
-    //count.value++;
+  function setUser(username:string, password:string, sudo:boolean): void {
+    const user = {
+      username,
+      "!password": password,
+      sudo
+    }; 
+    config.value["!users"].push(user);
   }
 
   return { config, setUser };
