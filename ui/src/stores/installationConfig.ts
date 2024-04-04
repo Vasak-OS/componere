@@ -5,9 +5,9 @@ import type { InstallationConfig } from '@/types/InstallationConfig';
 export const installationConfigStore = defineStore('installationConfig', () => {
   const config: Ref<InstallationConfig> = ref({
     separator: null,
-    'additional-repositories': [],
+    'additional-repositories': ['multilib'],
     'archinstall-language': 'English',
-    audio_config: null,
+    audio_config: { audio: 'pipewire' },
     bootloader: 'Systemd-boot',
     config_version: '2.6.0',
     debug: false,
@@ -157,14 +157,14 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     version: '2.6.0',
     '!users': []
   });
-  
-  function setUser(username:string, password:string, sudo:boolean): void {
+
+  function setUser(username: string, password: string, sudo: boolean): void {
     const user = {
       username,
-      "!password": password,
+      '!password': password,
       sudo
-    }; 
-    config.value["!users"].push(user);
+    };
+    config.value['!users'].push(user);
   }
 
   return { config, setUser };
