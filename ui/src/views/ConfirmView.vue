@@ -18,8 +18,8 @@ const install = async () => {
   <h1>Confirm</h1>
 
   <pre><code>{{ config.config }}</code></pre>
-
-  <button @click="install">Install</button>
-
-  <button @click="$emit('prevSection')">🢘</button>
+  <div class="componere-cta-section">
+    <button @click="$emit('prevSection')">🢘</button>
+    <button @click="install">Install</button>
+  </div>
 </template>

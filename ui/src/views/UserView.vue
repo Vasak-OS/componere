@@ -10,10 +10,10 @@ const image = ref('');
 const username = ref('');
 const password = ref('');
 
-const addUser = () =>{
+const addUser = () => {
   config.setUser(username.value, password.value, true);
   $emit('nextSection');
-}
+};
 
 onMounted(() => {
   $vsk.getIcon('user_auth').then((img: string) => {
@@ -24,7 +24,7 @@ onMounted(() => {
 <template>
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-10 w-auto" :src="image" alt="Add user" />
+      <img class="mx-auto h-24 w-auto" :src="image" alt="Add user" />
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -40,7 +40,7 @@ onMounted(() => {
               type="text"
               required
               v-model="username"
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="componere-user-input"
             />
           </div>
         </div>
@@ -58,7 +58,7 @@ onMounted(() => {
               type="password"
               required
               v-model="password"
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="componere-user-input"
             />
           </div>
         </div>
@@ -66,15 +66,16 @@ onMounted(() => {
         <div>
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="componere-user-cta-button"
           >
-            ->
+            +
           </button>
         </div>
       </form>
-
-      <button @click="$emit('prevSection')">🢘</button>
-      <button @click="$emit('nextSection')">🢚</button>
     </div>
+  </div>
+  <div class="componere-cta-section">
+    <button @click="$emit('prevSection')">🢘</button>
+    <button @click="$emit('nextSection')">🢚</button>
   </div>
 </template>

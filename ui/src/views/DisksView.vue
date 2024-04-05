@@ -6,6 +6,8 @@ const config = installationConfigStore();
 <template>
   <h1>Disks</h1>
   <pre><code>{{ config.config.disk_config }}</code></pre>
-  <button @click="$emit('prevSection')">🢘</button>
-  <button @click="$emit('nextSection')">🢚</button>
+  <div class="componere-cta-section">
+    <button @click="$emit('prevSection')">🢘</button>
+    <button @click="$emit('nextSection')">🢚</button>
+  </div>
 </template>

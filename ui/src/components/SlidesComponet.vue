@@ -25,12 +25,7 @@ onMounted(() => {
     <transition name="slide-fade" mode="out-in" appear>
       <template v-for="(slide, index) in slides" :key="index">
         <div :id="`slide-${index}`" v-if="index == currentSlide" class="container mx-auto">
-          <div
-            class="bg-cover bg-center h-auto text-white py-24 px-10 object-fill rounded-vsk aspect-video"
-            style="
-              background-image: url(https://images.unsplash.com/photo-1544427920-c49ccfb85579?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1422&q=80);
-            "
-          >
+          <div class="slide" :style="`background-image: url(${slide.background});`">
             <div class="md:w-1/2">
               <p class="font-bold text-sm uppercase">{{ slide.title }}</p>
               <p class="text-3xl font-bold">Hello world</p>

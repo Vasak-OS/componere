@@ -33,5 +33,7 @@ onMounted(() => {
     <template v-else> No tienes internet </template>
   </div>
   <p>{{ timezone }}</p>
-  <button @click="$emit('nextSection')">🢚</button>
+  <div class="componere-cta-section">
+    <button @click="$emit('nextSection')">🢚</button>
+  </div>
 </template>
