@@ -1,13 +1,14 @@
 const slides = [
   {
-    title: 'Welcome',
-    background: 'image1',
-    description: 'Welcome to the new and improved version of the app!'
+    title: 'VasakOS',
+    background: 'https://os.vasak.net.ar/img/hero-fullscreen-bg.jpg',
+    description: 'An innovative ArchLinux distribution!'
   },
   {
-    title: 'VasakOS',
-    background: 'image1',
-    description: 'Welcome to the new and improved version of the app!'
+    title: 'Vasak Desktop',
+    background: 'https://i.postimg.cc/tRSjhYWB/hydriam.jpg',
+    description:
+      'A unique desktop with web technologiesWelcome to the new and improved version of the app!'
   }
 ];
 
