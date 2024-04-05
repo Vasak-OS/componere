@@ -73,3 +73,13 @@ class ComponereBinding(QObject):
   @pyqtSlot()
   def loadUIConfig(self):
     self.window.load_ui_config()
+
+  @pyqtSlot(str, str)
+  def save(self, data, filename):
+    file = open(f"/tmp/{filename}", "w")
+    file.write(data)
+    file.close()
+
+  @pyqtSlot()
+  def install(self):
+    print("Installing...")
