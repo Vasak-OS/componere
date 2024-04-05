@@ -2,10 +2,10 @@ export type InstallationConfig = {
   separator: any;
   'additional-repositories'?: Array<any>;
   'archinstall-language'?: string;
-  audio_config: any;
+  audio_config?: any;
   bootloader: InitLinux;
   config_version: string;
-  debug: boolean;
+  debug?: boolean;
   disk_config: DiskConfig;
   disk_encryption: {
     encryption_type: EncryptionType;

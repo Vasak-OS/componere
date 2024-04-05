@@ -1,4 +1,6 @@
 export type VSK = {
-  getIcon: (string) => Promise<string>;
+  getIcon: (icon: string) => Promise<string>;
   loadUIConfig: () => Promise<void>;
+  save: (data: string, name: string) => Promise<void>;
+  install: () => Promise<void>;
 };
