@@ -2,6 +2,8 @@
 import { inject, ref, type Ref, onMounted, computed } from 'vue';
 import { installationConfigStore } from '@/stores/installationConfig';
 import DiskAreaComponent from '@/components/disk/DiskAreaComponent.vue';
+import DiskPartitionComponent from '@/components/disk/DiskPartitionComponent.vue';
+import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
 import type { VSK } from '@/types/VSK';
 import type { VSKDisk } from '@/types/VSKDisk';
 
@@ -42,7 +44,17 @@ onMounted(() => {
     <option v-for="disk in disksAvailable" v-bind:key="disk">{{ disk }}</option>
   </select>
   <DiskAreaComponent :name="selectedDisk?.name" :type="selectedDisk?.type">
-    <pre><code>{{ selectedDisk }}</code></pre>
+    <DiskSpaceComponent>
+      <DiskPartitionComponent
+        v-for="partition in selectedDisk?.partition.list"
+        :key="partition.name"
+        :name="partition.name"
+        :type="partition.type"
+        :label="partition.label"
+        :diskSpace="selectedDisk?.size"
+        :partitionSpace="partition.size"
+      />
+    </DiskSpaceComponent>
   </DiskAreaComponent>
   <div class="componere-cta-section">
     <button @click="$emit('prevSection')">🢘</button>
