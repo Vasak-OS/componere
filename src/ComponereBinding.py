@@ -1,6 +1,7 @@
 import os
 from PyQt6.QtCore import pyqtSlot, QObject, Qt
 from Vasak.system.VSKIconManager import VSKIconManager
+from Vasak.hardware.VSKDisks import VSKDisks
 
 class ComponereBinding(QObject):
   def __init__(self, window, app):
@@ -8,6 +9,7 @@ class ComponereBinding(QObject):
     self.window = window
     self.app = app
     self.iconManager = VSKIconManager()
+    self.disks = VSKDisks()
 
   @pyqtSlot(result=str)
   def getHome(self):
@@ -83,3 +85,7 @@ class ComponereBinding(QObject):
   @pyqtSlot()
   def install(self):
     print("Installing...")
+  
+  @pyqtSlot(result=str)
+  def getDisks(self):
+    return str(self.disks.getDisksList())
