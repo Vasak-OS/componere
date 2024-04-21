@@ -4,6 +4,7 @@ import { installationConfigStore } from '@/stores/installationConfig';
 import DiskAreaComponent from '@/components/disk/DiskAreaComponent.vue';
 import DiskPartitionComponent from '@/components/disk/DiskPartitionComponent.vue';
 import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
+import PartitionTableComponent from '@/components/disk/PartitionTableComponent.vue';
 import type { VSK } from '@/types/VSK';
 import type { VSKDisk } from '@/types/VSKDisk';
 
@@ -54,6 +55,7 @@ onMounted(() => {
         :partitionSpace="partition.size"
       />
     </DiskSpaceComponent>
+    <PartitionTableComponent :disk="selectedDisk" />
   </DiskAreaComponent>
   <div class="componere-cta-section">
     <button @click="$emit('prevSection')">🢘</button>
