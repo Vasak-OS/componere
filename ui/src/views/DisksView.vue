@@ -14,7 +14,6 @@ const diskSelected: Ref<string> = ref('null');
 
 const setDisks = async () => {
   const vskDisks = await $vsk.getDisks();
-  console.warn(vskDisks);
   disks.value = JSON.parse(vskDisks);
   setDiskSelected(disksAvailable.value[0]);
 };
