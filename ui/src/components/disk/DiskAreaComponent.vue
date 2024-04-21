@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { VSK } from '@/types/VSK';
 import { defineProps, inject, onMounted, ref } from 'vue';
+import { getIcon } from '@/utils/vasakFunctions';
 
 const img = ref('');
 const $vsk = inject('vsk') as VSK;
@@ -11,9 +12,9 @@ const props = defineProps<{
 
 const setImage = async () => {
   if (props.type === 'NVME' || props.type === 'SSD') {
-    img.value = await $vsk.getIcon('drive-harddisk-solidstate');
+    img.value = await getIcon($vsk, 'drive-harddisk-solidstate');
   } else {
-    img.value = await $vsk.getIcon('drive-harddisk');
+    img.value = await getIcon($vsk, 'drive-harddisk');
   }
 };
 
