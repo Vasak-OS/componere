@@ -7,11 +7,18 @@ import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
 import PartitionTableComponent from '@/components/disk/PartitionTableComponent.vue';
 import type { VSK } from '@/types/VSK';
 import type { VSKDisk } from '@/types/VSKDisk';
+import type { DiskModificationConfig } from '@/types/InstallationConfig';
+import { presetDiskPartition, calcuclateSwapSize } from '@/utils/diskUtils';
 
 const config = installationConfigStore();
 const $vsk = inject('vsk') as VSK;
 const disks: Ref<Array<VSKDisk>> = ref([]);
 const diskSelected: Ref<string> = ref('null');
+const diskConfig: Ref<DiskModificationConfig> = ref({
+  device: '',
+  partitions: []
+});
+const useSWAP = ref(false);
 
 const setDisks = async () => {
   const vskDisks = await $vsk.getDisks();
@@ -24,7 +31,23 @@ const disksAvailable = computed((): Array<string> => {
 });
 
 const setDiskSelected = (disk: string) => {
+  var swapSize = 0;
   diskSelected.value = disk;
+  if (selectedDisk.value !== undefined) {
+    diskConfig.value.device = selectedDisk.value.deviceId;
+    if (useSWAP.value) {
+      swapSize = calcuclateSwapSize(selectedDisk.value.size);
+    }
+    diskConfig.value.partitions = presetDiskPartition(
+      config.config.bootloader,
+      swapSize,
+      selectedDisk.value.size
+    );
+  }
+  config.setDiskConfig({
+    config_type: 'manual_partitioning',
+    device_modifications: [diskConfig.value]
+  });
 };
 
 const selectedDisk = computed((): VSKDisk | undefined => {
