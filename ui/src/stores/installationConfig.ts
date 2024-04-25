@@ -1,6 +1,6 @@
 import { ref, type Ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { InstallationConfig } from '@/types/InstallationConfig';
+import type { DiskConfig, InstallationConfig } from '@/types/InstallationConfig';
 
 export const installationConfigStore = defineStore('installationConfig', () => {
   const config: Ref<InstallationConfig> = ref({
@@ -167,5 +167,9 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     config.value['!users'].push(user);
   }
 
-  return { config, setUser };
+  function setDiskConfig(diskConfig: DiskConfig): void {
+    config.value.disk_config = diskConfig;
+  }
+
+  return { config, setUser, setDiskConfig };
 });
