@@ -3,7 +3,7 @@ export type InstallationConfig = {
   'additional-repositories'?: Array<any>;
   'archinstall-language'?: string;
   audio_config?: any;
-  bootloader: InitLinux;
+  bootloader: BootLoader;
   config_version: string;
   debug?: boolean;
   disk_config: DiskConfig;
@@ -34,7 +34,7 @@ export type InstallationConfig = {
   '!users': Array<User>;
 };
 
-export type InitLinux = 'Systemd-boot' | 'grub';
+export type BootLoader = 'Systemd-boot' | 'grub';
 
 export type KernelLinux =
   | 'linux'
