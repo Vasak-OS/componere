@@ -1,7 +1,9 @@
 import os
+import json
 from PyQt6.QtCore import pyqtSlot, QObject, Qt
 from Vasak.system.VSKIconManager import VSKIconManager
 from Vasak.hardware.VSKDisks import VSKDisks
+from Vasak.hardware.VSKInfoHard import VSKInfoHard
 
 class ComponereBinding(QObject):
   def __init__(self, window, app):
@@ -10,6 +12,7 @@ class ComponereBinding(QObject):
     self.app = app
     self.iconManager = VSKIconManager()
     self.disks = VSKDisks()
+    self.infoHard = VSKInfoHard()
 
   @pyqtSlot(result=str)
   def getHome(self):
@@ -89,3 +92,7 @@ class ComponereBinding(QObject):
   @pyqtSlot(result=str)
   def getDisks(self):
     return str(self.disks.getDisksList())
+  
+  @pyqtSlot( result=str)
+  def getHardInfo(self):
+    return json.dumps(self.infoHard.getInfo())
