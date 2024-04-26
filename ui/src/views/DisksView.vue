@@ -8,7 +8,7 @@ import PartitionTableComponent from '@/components/disk/PartitionTableComponent.v
 import type { VSK } from '@/types/VSK';
 import type { VSKDisk } from '@/types/VSKDisk';
 import type { DiskModificationConfig } from '@/types/InstallationConfig';
-import { presetDiskPartition, calcuclateSwapSize } from '@/utils/diskUtils';
+import { presetDiskPartition, calcuclateSwapSize, bytesToMB } from '@/utils/diskUtils';
 
 const config = installationConfigStore();
 const $vsk = inject('vsk') as VSK;
@@ -20,7 +20,7 @@ const diskConfig: Ref<DiskModificationConfig> = ref({
 });
 const useSWAP = ref(false);
 
-const setDisks = async () => {
+const setDisks = async (): Promise<void> => {
   const vskDisks = await $vsk.getDisks();
   disks.value = JSON.parse(vskDisks);
   setDiskSelected(disksAvailable.value[0]);
@@ -30,24 +30,29 @@ const disksAvailable = computed((): Array<string> => {
   return disks.value.map((disk) => disk.name);
 });
 
-const setDiskSelected = (disk: string) => {
-  var swapSize = 0;
+const setDiskSelected = async (disk: string): Promise<void> => {
   diskSelected.value = disk;
+  setDiskConfig();
+};
+
+const setDiskConfig = async (): Promise<void> => {
+  var swapSize = 0;
   if (selectedDisk.value !== undefined) {
     diskConfig.value.device = selectedDisk.value.deviceId;
     if (useSWAP.value) {
-      swapSize = calcuclateSwapSize(selectedDisk.value.size);
+      const ram = JSON.parse(await $vsk.getHardInfo()).ram;
+      swapSize = calcuclateSwapSize(ram * 1024);
     }
     diskConfig.value.partitions = presetDiskPartition(
       config.config.bootloader,
       swapSize,
-      selectedDisk.value.size
+      bytesToMB(selectedDisk.value.size)
     );
+    config.setDiskConfig({
+      config_type: 'manual_partitioning',
+      device_modifications: [diskConfig.value]
+    });
   }
-  config.setDiskConfig({
-    config_type: 'manual_partitioning',
-    device_modifications: [diskConfig.value]
-  });
 };
 
 const selectedDisk = computed((): VSKDisk | undefined => {
@@ -63,9 +68,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <select class="componere-select" v-model="diskSelected">
+  <select class="componere-select" v-model="diskSelected" @change="setDiskConfig">
     <option v-for="disk in disksAvailable" v-bind:key="disk">{{ disk }}</option>
   </select>
+  <div>
+    <label for="useSWAP">Use SWAP</label>
+    <input type="checkbox" v-model="useSWAP" @change="setDiskConfig" />
+  </div>
   <DiskAreaComponent :name="selectedDisk?.name" :type="selectedDisk?.type">
     <DiskSpaceComponent>
       <DiskPartitionComponent
@@ -80,6 +89,18 @@ onMounted(() => {
     </DiskSpaceComponent>
     <PartitionTableComponent :disk="selectedDisk" />
   </DiskAreaComponent>
+  <h2>After</h2>
+  <DiskSpaceComponent>
+    <DiskPartitionComponent
+      v-for="partition in config.config.disk_config.device_modifications[0].partitions"
+      :key="partition.mountpoint"
+      :name="partition.obj_id"
+      :type="partition.type"
+      :label="partition.flags[0]"
+      :diskSpace="selectedDisk?.size"
+      :partitionSpace="partition.length.value * 1024 * 1024"
+    />
+  </DiskSpaceComponent>
   <div class="componere-cta-section">
     <button @click="$emit('prevSection')">🢘</button>
     <button @click="$emit('nextSection')">🢚</button>
