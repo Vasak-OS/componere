@@ -4,4 +4,5 @@ export type VSK = {
   save: (data: string, name: string) => Promise<void>;
   install: () => Promise<void>;
   getDisks: () => Promise<string>;
+  getHardInfo: () => Promise<string>;
 };
