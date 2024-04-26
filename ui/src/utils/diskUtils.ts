@@ -1,10 +1,10 @@
 import type { BootLoader, Partition, FileSystemType, DiskFlags } from '@/types/InstallationConfig';
 
-export const calculatePercentage = (used: number, total: number) => {
+export const calculatePercentage = (used: number, total: number): number => {
   return Math.round((used / total) * 100);
 };
 
-export const calculateUnit = (size: number) => {
+export const calculateUnit = (size: number): string => {
   const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
   let iterator = 0,
@@ -15,6 +15,10 @@ export const calculateUnit = (size: number) => {
   }
 
   return diskSize.toFixed(diskSize < 10 && iterator > 0 ? 1 : 0) + ' ' + units[iterator];
+};
+
+export const bytesToMB = (bytes: number): number => {
+  return bytes / 1024 / 1024;
 };
 
 const getBootLoaderPartitionData = (bootloader: BootLoader): Partition => {
