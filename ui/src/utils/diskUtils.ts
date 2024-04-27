@@ -22,53 +22,11 @@ export const bytesToMB = (bytes: number): number => {
 };
 
 export const getBootLoaderPartitionData = (bootloader: BootLoader): Partition => {
+  //TODO: Usar getPrimaryPartitionData
   if (bootloader === 'grub') {
-    return {
-      btrfs: [],
-      flags: ['Boot'],
-      fs_type: 'ext4',
-      length: {
-        sector_size: null,
-        total_size: null,
-        unit: 'MB',
-        value: 512
-      },
-      mount_options: [],
-      mountpoint: null,
-      obj_id: 'bootloader',
-      start: {
-        sector_size: null,
-        total_size: null,
-        unit: 'MB',
-        value: 0
-      },
-      status: 'create',
-      type: 'primary'
-    };
+    return getPrimaryPartitionData('Boot', 'ext4', 512, 0);
   }
-
-  return {
-    btrfs: [],
-    flags: ['Boot'],
-    fs_type: 'fat32',
-    length: {
-      sector_size: null,
-      total_size: null,
-      unit: 'MB',
-      value: 512
-    },
-    mount_options: [],
-    mountpoint: null,
-    obj_id: 'bootloader',
-    start: {
-      sector_size: null,
-      total_size: null,
-      unit: 'MB',
-      value: 0
-    },
-    status: 'create',
-    type: 'primary'
-  };
+  return getPrimaryPartitionData('Boot', 'fat32', 512, 0);
 };
 
 export const getPrimaryPartitionData = (

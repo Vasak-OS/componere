@@ -52,7 +52,7 @@ test('Test Get Boot Loader Partition Data', () => {
     },
     mount_options: [],
     mountpoint: null,
-    obj_id: 'bootloader',
+    obj_id: '',
     start: {
       sector_size: null,
       total_size: null,
@@ -76,7 +76,7 @@ test('Test Get Boot Loader Partition Data', () => {
     },
     mount_options: [],
     mountpoint: null,
-    obj_id: 'bootloader',
+    obj_id: '',
     start: {
       sector_size: null,
       total_size: null,
@@ -144,7 +144,7 @@ test('Test Preset Disk Partition', () => {
       },
       mount_options: [],
       mountpoint: null,
-      obj_id: 'bootloader',
+      obj_id: '',
       start: {
         sector_size: null,
         total_size: null,
