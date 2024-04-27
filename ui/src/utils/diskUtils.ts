@@ -1,4 +1,4 @@
-import type { BootLoader, Partition, FileSystemType, DiskFlags } from '@/types/InstallationConfig';
+import type { BootLoader, Partition, FileSystemType, DiskFlags } from '../types/InstallationConfig';
 
 export const calculatePercentage = (used: number, total: number): number => {
   return Math.round((used / total) * 100);
@@ -21,7 +21,7 @@ export const bytesToMB = (bytes: number): number => {
   return bytes / 1024 / 1024;
 };
 
-const getBootLoaderPartitionData = (bootloader: BootLoader): Partition => {
+export const getBootLoaderPartitionData = (bootloader: BootLoader): Partition => {
   if (bootloader === 'grub') {
     return {
       btrfs: [],
@@ -71,7 +71,7 @@ const getBootLoaderPartitionData = (bootloader: BootLoader): Partition => {
   };
 };
 
-const getPrimaryPartitionData = (
+export const getPrimaryPartitionData = (
   name: string,
   fsType: string,
   size: number,
@@ -108,9 +108,10 @@ export const presetDiskPartition = (
 ): Array<Partition> => {
   const partitions: Array<Partition> = [];
   partitions.push(getBootLoaderPartitionData(bootloader));
-  partitions.push(getPrimaryPartitionData('Root', 'ext4', diskSize - 512 - swapSize, 512));
+  const rootSize = diskSize - 512 - swapSize;
+  partitions.push(getPrimaryPartitionData('Root', 'ext4', rootSize, 512));
   if (swapSize > 0) {
-    partitions.push(getPrimaryPartitionData('Swap', 'swap', swapSize, diskSize - 512 - swapSize));
+    partitions.push(getPrimaryPartitionData('Swap', 'swap', swapSize, rootSize + 512));
   }
 
   return partitions;

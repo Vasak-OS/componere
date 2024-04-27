@@ -1,4 +1,4 @@
-import type { Language } from "@/types/Language";
+import type { Language } from "../types/Language";
 
 const languages: Language[] = [
   { abbr: 'aa', lang: 'Afar' },
