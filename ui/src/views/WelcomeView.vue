@@ -34,6 +34,6 @@ onMounted(() => {
   </div>
   <p>{{ timezone }}</p>
   <div class="componere-cta-section">
-    <button @click="$emit('nextSection')">🢚</button>
+    <button @click="$emit('nextSection')"><font-awesome-icon icon="fa-angle-right"/></button>
   </div>
 </template>

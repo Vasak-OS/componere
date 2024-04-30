@@ -102,7 +102,7 @@ onMounted(() => {
     />
   </DiskSpaceComponent>
   <div class="componere-cta-section">
-    <button @click="$emit('prevSection')">🢘</button>
-    <button @click="$emit('nextSection')">🢚</button>
+    <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left"/></button>
+    <button @click="$emit('nextSection')"><font-awesome-icon icon="fa-angle-right"/></button>
   </div>
 </template>

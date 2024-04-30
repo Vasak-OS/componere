@@ -7,9 +7,10 @@ const config = installationConfigStore();
 const $vsk = inject('vsk') as VSK;
 
 const install = async () => {
-  const jsonData = JSON.stringify(config.config);
-  await $vsk.save(jsonData, 'config.json');
-  // $vsk.save(jsonData, 'user.json')
+  const installData = JSON.stringify(config.config);
+  const userData = JSON.stringify(config.userConfig);
+  await $vsk.save(installData, 'config.json');
+  await $vsk.save(userData, 'user.json')
   await $vsk.install();
 };
 </script>
@@ -19,7 +20,7 @@ const install = async () => {
 
   <pre><code>{{ config.config }}</code></pre>
   <div class="componere-cta-section">
-    <button @click="$emit('prevSection')">🢘</button>
-    <button @click="install">Install</button>
+    <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left"/></button>
+    <button @click="install"><font-awesome-icon icon="fa-download"/></button>
   </div>
 </template>
