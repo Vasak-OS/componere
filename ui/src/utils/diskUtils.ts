@@ -1,3 +1,4 @@
+import type { VSKDiskPartition } from '../types/VSKDisk';
 import type { BootLoader, Partition, FileSystemType, DiskFlags } from '../types/InstallationConfig';
 
 export const calculatePercentage = (used: number, total: number): number => {
@@ -83,4 +84,22 @@ export const calcuclateSwapSize = (memory: number): number => {
   } else {
     return memory / 2;
   }
+};
+
+export const vskDiskPartitionDTO = (partition: Partition): VSKDiskPartition => {
+  return {
+    path: partition.mountpoint,
+    size: partition.length.value * 1024 * 1024,
+    name: partition.obj_id,
+    offset: partition.start.value,
+    type: partition.type,
+    label: partition.flags[0],
+    fs_type: partition.fs_type.toString(),
+    fsVersion: '',
+    fsLabel: '',
+    fsUuid: '',
+    fsSize: 0,
+    fsUsed: 0,
+    fsFreeSize: 0
+  } as unknown as VSKDiskPartition;
 };

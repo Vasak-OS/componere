@@ -1,14 +1,20 @@
 <script lang="ts" setup>
 import { inject, ref, type Ref, onMounted, computed } from 'vue';
 import { installationConfigStore } from '@/stores/installationConfig';
+import CardComponent from '@/components/card/CardComponent.vue';
 import DiskAreaComponent from '@/components/disk/DiskAreaComponent.vue';
-import DiskPartitionComponent from '@/components/disk/DiskPartitionComponent.vue';
 import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
 import PartitionTableComponent from '@/components/disk/PartitionTableComponent.vue';
 import type { VSK } from '@/types/VSK';
 import type { VSKDisk } from '@/types/VSKDisk';
 import type { DiskModificationConfig } from '@/types/InstallationConfig';
-import { presetDiskPartition, calcuclateSwapSize, bytesToMB } from '@/utils/diskUtils';
+import type { VSKDiskPartition } from '../types/VSKDisk';
+import {
+  presetDiskPartition,
+  calcuclateSwapSize,
+  bytesToMB,
+  vskDiskPartitionDTO
+} from '@/utils/diskUtils';
 
 const config = installationConfigStore();
 const $vsk = inject('vsk') as VSK;
@@ -62,6 +68,12 @@ const selectedDisk = computed((): VSKDisk | undefined => {
   return disks.value.find((disk) => disk.name === diskSelected.value);
 });
 
+const emulatedFinalStatusPartitions = computed((): VSKDiskPartition[] | undefined => {
+  return config.config.disk_config.device_modifications[0].partitions.map((partition) => {
+    return vskDiskPartitionDTO(partition);
+  });
+});
+
 onMounted(() => {
   setDisks();
 });
@@ -75,34 +87,24 @@ onMounted(() => {
     <label for="useSWAP">Use SWAP</label>
     <input type="checkbox" v-model="useSWAP" @change="setDiskConfig" />
   </div>
-  <DiskAreaComponent :name="selectedDisk?.name" :type="selectedDisk?.type">
-    <DiskSpaceComponent>
-      <DiskPartitionComponent
-        v-for="partition in selectedDisk?.partition.list"
-        :key="partition.name"
-        :name="partition.name"
-        :type="partition.type"
-        :label="partition.label"
+  <CardComponent>
+    <DiskAreaComponent :name="selectedDisk?.name" :type="selectedDisk?.type">
+      <DiskSpaceComponent
+        :partitions="selectedDisk?.partition.list"
         :diskSpace="selectedDisk?.size"
-        :partitionSpace="partition.size"
       />
-    </DiskSpaceComponent>
+    </DiskAreaComponent>
     <PartitionTableComponent :disk="selectedDisk" />
-  </DiskAreaComponent>
-  <h2>After</h2>
-  <DiskSpaceComponent>
-    <DiskPartitionComponent
-      v-for="partition in config.config.disk_config.device_modifications[0].partitions"
-      :key="partition.mountpoint"
-      :name="partition.obj_id"
-      :type="partition.type"
-      :label="partition.flags[0]"
+  </CardComponent>
+  <CardComponent>
+    <h2 class="card-title">After</h2>
+    <DiskSpaceComponent
+      :partitions="emulatedFinalStatusPartitions"
       :diskSpace="selectedDisk?.size"
-      :partitionSpace="partition.length.value * 1024 * 1024"
     />
-  </DiskSpaceComponent>
+  </CardComponent>
   <div class="componere-cta-section">
-    <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left"/></button>
-    <button @click="$emit('nextSection')"><font-awesome-icon icon="fa-angle-right"/></button>
+    <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left" /></button>
+    <button @click="$emit('nextSection')"><font-awesome-icon icon="fa-angle-right" /></button>
   </div>
 </template>

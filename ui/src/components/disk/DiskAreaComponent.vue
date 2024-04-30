@@ -23,11 +23,11 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="card flex">
-    <div class="flex-none w-48 relative">
-      <img class="absolute top-0 left-0 w-48 h-48 object-cover" :src="img" alt="Disk icon" />
+  <div class="card-head-disk">
+    <div>
+      <img :src="img" alt="Disk icon" />
     </div>
-    <div class="flex-auto p-8">
+    <div class="card-head-disk-info">
       <h2 class="card-title">{{ name }}({{ type }})</h2>
       <slot />
     </div>
