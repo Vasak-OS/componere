@@ -1,6 +1,10 @@
 import { ref, type Ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { DiskConfig, InstallationConfig } from '@/types/InstallationConfig';
+import type {
+  DiskConfig,
+  InstallationConfig,
+  InstallationUserConfig
+} from '@/types/InstallationConfig';
 
 export const installationConfigStore = defineStore('installationConfig', () => {
   const config: Ref<InstallationConfig> = ref({
@@ -154,7 +158,10 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     silent: false,
     swap: true,
     timezone: 'UTC',
-    version: '2.6.0',
+    version: '2.6.0'
+  });
+
+  const userConfig: Ref<InstallationUserConfig> = ref({
     '!users': []
   });
 
@@ -164,12 +171,12 @@ export const installationConfigStore = defineStore('installationConfig', () => {
       '!password': password,
       sudo
     };
-    config.value['!users'].push(user);
+    userConfig.value['!users'].push(user);
   }
 
   function setDiskConfig(diskConfig: DiskConfig): void {
     config.value.disk_config = diskConfig;
   }
 
-  return { config, setUser, setDiskConfig };
+  return { config, userConfig, setUser, setDiskConfig };
 });

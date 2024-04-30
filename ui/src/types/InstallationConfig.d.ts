@@ -31,6 +31,9 @@ export type InstallationConfig = {
   swap: boolean;
   timezone: string;
   version: string;
+};
+
+export type InstallationUserConfig = {
   '!users': Array<User>;
 };
 
