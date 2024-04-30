@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { computed, defineProps } from 'vue';
 import { randomColor } from '@/utils/colorUtils';
-import { calculatePercentage, calculateUnit } from '@/utils/diskUtils';
+import { calculateUnit } from '@/utils/diskUtils';
 
 const props = defineProps<{
   name?: string | undefined | unknown;
   type?: string | undefined | unknown;
-  diskSpace: number | undefined;
+  percentage?: number | undefined | unknown;
   partitionSpace: number | undefined;
   label: string | undefined;
 }>();
-
-const percentage = computed(() => {
-  return calculatePercentage(props.partitionSpace || 1, props.diskSpace || 1);
-});
 
 const partitionSizeText = computed(() => {
   return calculateUnit(props.partitionSpace || 0);

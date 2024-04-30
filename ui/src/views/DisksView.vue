@@ -61,11 +61,8 @@ const setDiskConfig = async (): Promise<void> => {
   }
 };
 
-const selectedDisk = computed((): VSKDisk | undefined => {
-  if (diskSelected.value === 'null') {
-    return undefined;
-  }
-  return disks.value.find((disk) => disk.name === diskSelected.value);
+const selectedDisk = computed((): VSKDisk => {
+  return disks.value.find((disk) => disk.name === diskSelected.value) || {} as VSKDisk;
 });
 
 const emulatedFinalStatusPartitions = computed((): VSKDiskPartition[] | undefined => {
