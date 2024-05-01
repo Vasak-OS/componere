@@ -4,24 +4,30 @@ import { randomColor } from '@/utils/colorUtils';
 import { calculateUnit } from '@/utils/diskUtils';
 
 const props = defineProps<{
-  name?: string | undefined | unknown;
-  type?: string | undefined | unknown;
-  percentage?: number | undefined | unknown;
-  partitionSpace: number | undefined;
-  label: string | undefined;
+  name?: string;
+  fsType: string;
+  percentage?: number;
+  partitionSpace: number;
+  label: string;
 }>();
 
 const partitionSizeText = computed(() => {
   return calculateUnit(props.partitionSpace || 0);
 });
+
+const colorFormat = computed(() => {
+  return props.fsType || props.label;
+});
 </script>
 
 <template>
   <div
-    :style="`width: ${percentage}%; background: ${randomColor()};`"
+    :style="`width: ${percentage}%; background: ${randomColor(colorFormat)};`"
     class="componere-disk-partition"
   >
+  <p class="text-center">
     <div class="componere-disk-partition-label">{{ props.label }}</div>
     <div class="componere-disk-partition-space">{{ partitionSizeText }}</div>
+  </p>
   </div>
 </template>
