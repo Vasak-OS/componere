@@ -11,11 +11,11 @@ const props = defineProps<{
   label: string;
 }>();
 
-const partitionSizeText = computed(() => {
+const partitionSizeText = computed((): string => {
   return calculateUnit(props.partitionSpace || 0);
 });
 
-const colorFormat = computed(() => {
+const colorFormat = computed((): string => {
   return props.fsType || props.label;
 });
 </script>

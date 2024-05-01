@@ -15,6 +15,7 @@ import {
   bytesToMB,
   vskDiskPartitionDTO
 } from '@/utils/diskUtils';
+import { getDisks } from '@/utils/vasakFunctions';
 
 const config = installationConfigStore();
 const $vsk = inject('vsk') as VSK;
@@ -27,8 +28,7 @@ const diskConfig: Ref<DiskModificationConfig> = ref({
 const useSWAP = ref(false);
 
 const setDisks = async (): Promise<void> => {
-  const vskDisks = await $vsk.getDisks();
-  disks.value = JSON.parse(vskDisks);
+  disks.value = await getDisks($vsk);
   setDiskSelected(disksAvailable.value[0]);
 };
 
@@ -62,7 +62,7 @@ const setDiskConfig = async (): Promise<void> => {
 };
 
 const selectedDisk = computed((): VSKDisk => {
-  return disks.value.find((disk) => disk.name === diskSelected.value) || {} as VSKDisk;
+  return disks.value.find((disk) => disk.name === diskSelected.value) || ({} as VSKDisk);
 });
 
 const emulatedFinalStatusPartitions = computed((): VSKDiskPartition[] | undefined => {
