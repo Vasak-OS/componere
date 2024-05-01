@@ -94,7 +94,7 @@ export const vskDiskPartitionDTO = (partition: Partition): VSKDiskPartition => {
     offset: partition.start.value,
     type: partition.type,
     label: partition.flags[0],
-    fs_type: partition.fs_type.toString(),
+    fsType: partition.fs_type.toString(),
     fsVersion: '',
     fsLabel: '',
     fsUuid: '',
