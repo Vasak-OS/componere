@@ -22,7 +22,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="absolute top-0 left-0 flex w-screen h-screen flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img class="mx-auto h-24 w-auto" :src="image" alt="Add user" />
     </div>
