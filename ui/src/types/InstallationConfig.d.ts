@@ -90,7 +90,7 @@ export type Partition = {
   type: DiskType;
 };
 
-export type FileSystemType = 'ext4' | 'btrfs' | 'fat32';
+export type FileSystemType = 'ext4' | 'btrfs' | 'fat32' | 'swap';
 
 export type DiskFlags = 'Boot' | 'Root' | 'Swap';
 
