@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 import type {
   DiskConfig,
   InstallationConfig,
-  InstallationUserConfig
+  InstallationUserConfig,
+  User
 } from '@/types/InstallationConfig';
 
 export const installationConfigStore = defineStore('installationConfig', () => {
@@ -165,18 +166,19 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     '!users': []
   });
 
-  function setUser(username: string, password: string, sudo: boolean): void {
-    const user = {
-      username,
-      '!password': password,
-      sudo
-    };
+  function setUser(user: User): void {
     userConfig.value['!users'].push(user);
+  }
+
+  function deleteUser(username: string): void {
+    userConfig.value['!users'] = userConfig.value['!users'].filter(
+      (user) => user.username !== username
+    );
   }
 
   function setDiskConfig(diskConfig: DiskConfig): void {
     config.value.disk_config = diskConfig;
   }
 
-  return { config, userConfig, setUser, setDiskConfig };
+  return { config, userConfig, setUser, deleteUser, setDiskConfig };
 });
