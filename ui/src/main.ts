@@ -6,14 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faAngleLeft,
   faAngleRight,
-  faUserPlus,
+  faClose,
   faDownload,
-  faClose
+  faHardDrive,
+  faUsers,
+  faUserPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 const startApp = (channel: any) => {
   const app = createApp(App);
-  library.add(faAngleLeft, faAngleRight, faUserPlus, faDownload, faClose);
+  library.add(faAngleLeft, faAngleRight, faUserPlus, faDownload, faClose, faHardDrive, faUsers);
 
   app.component('font-awesome-icon', FontAwesomeIcon);
   app.provide('vsk', channel.objects.vsk);
