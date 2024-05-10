@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import { inject, ref, onMounted } from 'vue';
+import { inject, ref, onMounted, computed, type ComputedRef } from 'vue';
+import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
 import { installationConfigStore } from '@/stores/installationConfig';
 import type { VSK } from '@/types/VSK';
+import type { User } from '@/types/InstallationConfig';
 
 const $vsk = inject('vsk') as VSK;
 const $emit = defineEmits(['nextSection', 'prevSection']);
@@ -10,10 +12,18 @@ const image = ref('');
 const username = ref('');
 const password = ref('');
 
-const addUser = () => {
-  config.setUser(username.value, password.value, true);
-  $emit('nextSection');
+const addUser = (e) => {
+  const newUser: User = {
+    username: username.value,
+    '!password': password.value,
+    sudo: true
+  };
+  config.setUser(newUser);
+  //$emit('nextSection');
+  e.preventDefault();
 };
+
+const users: ComputedRef<User[]> = computed(() => config.userConfig['!users']);
 
 onMounted(() => {
   $vsk.getIcon('user_auth').then((img: string) => {
@@ -22,7 +32,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="absolute top-0 left-0 flex w-screen h-screen flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="componere-user-section">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img class="mx-auto h-24 w-auto" :src="image" alt="Add user" />
     </div>
@@ -64,18 +74,20 @@ onMounted(() => {
         </div>
 
         <div>
-          <button
-            type="submit"
-            class="componere-user-cta-button"
-          >
-            <font-awesome-icon icon="fa-user-plus"/>
+          <button type="submit" class="componere-user-cta-button">
+            <font-awesome-icon icon="fa-user-plus" />
           </button>
         </div>
       </form>
     </div>
   </div>
+  <div class="componere-user-list">
+    <div class="componere-user-list-section">
+      <UserPictureComponent v-for="user in users" :key="user.username" :user="user" />
+    </div>
+  </div>
   <div class="componere-cta-section">
-    <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left"/></button>
-    <button @click="$emit('nextSection')"><font-awesome-icon icon="fa-angle-right"/></button>
+    <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left" /></button>
+    <button @click="$emit('nextSection')"><font-awesome-icon icon="fa-angle-right" /></button>
   </div>
 </template>
