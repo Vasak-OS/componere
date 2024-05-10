@@ -83,7 +83,7 @@ onMounted(() => {
   </div>
   <div class="componere-user-list">
     <div class="componere-user-list-section">
-      <UserPictureComponent v-for="user in users" :key="user.username" :user="user" />
+      <UserPictureComponent v-for="user in users" :key="user.username" :user="user" :canDelete="true" />
     </div>
   </div>
   <div class="componere-cta-section">
