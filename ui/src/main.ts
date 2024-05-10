@@ -7,12 +7,13 @@ import {
   faAngleLeft,
   faAngleRight,
   faUserPlus,
-  faDownload
+  faDownload,
+  faClose
 } from '@fortawesome/free-solid-svg-icons';
 
 const startApp = (channel: any) => {
   const app = createApp(App);
-  library.add(faAngleLeft, faAngleRight, faUserPlus, faDownload);
+  library.add(faAngleLeft, faAngleRight, faUserPlus, faDownload, faClose);
 
   app.component('font-awesome-icon', FontAwesomeIcon);
   app.provide('vsk', channel.objects.vsk);
