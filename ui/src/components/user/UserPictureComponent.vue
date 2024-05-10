@@ -5,6 +5,7 @@ import type { User } from '@/types/InstallationConfig';
 
 const props = defineProps<{
   user: User;
+  canDelete: boolean;
 }>();
 
 const config = installationConfigStore();
@@ -20,7 +21,7 @@ const deleteUser = () => {
       :src="`https://ui-avatars.com/api/?name=${user.username}&background=random&size=64&bold=true&rounded=true`"
       :alt="user.username"
     />
-    <button class="componere-user-profile-button" @click="deleteUser">
+    <button v-if="canDelete" class="componere-user-profile-button" @click="deleteUser">
       <font-awesome-icon icon="fa-close" />
     </button>
   </div>
