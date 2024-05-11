@@ -49,11 +49,11 @@ const setDiskConfig = async (): Promise<void> => {
       const ram = JSON.parse(await $vsk.getHardInfo()).ram;
       swapSize = calcuclateSwapSize(ram * 1024);
     }
-    diskConfig.value.partitions = presetDiskPartition(
-      config.config.bootloader,
+    diskConfig.value.partitions = presetDiskPartition({
+      bootloader: config.config.bootloader,
       swapSize,
-      bytesToMB(selectedDisk.value.size)
-    );
+      diskSize: bytesToMB(selectedDisk.value.size)
+    });
     config.setDiskConfig({
       config_type: 'manual_partitioning',
       device_modifications: [diskConfig.value]

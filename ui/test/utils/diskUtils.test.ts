@@ -89,7 +89,7 @@ test('Test Get Boot Loader Partition Data', () => {
 });
 
 test('Test Get Primary Partition Data', () => {
-  const partition = getPrimaryPartitionData('', 'ext4', 512, 0);
+  const partition = getPrimaryPartitionData({ name: '', fsType: 'ext4', size: 512, start: 0 });
   expect(partition).toEqual({
     btrfs: [],
     flags: [''],
@@ -130,7 +130,7 @@ test('Test Calculate Swap Size', () => {
 });
 
 test('Test Preset Disk Partition', () => {
-  const partitions = presetDiskPartition('grub', 1024, 2048);
+  const partitions = presetDiskPartition({ bootloader: 'grub', swapSize: 1024, diskSize: 2048 });
   expect(partitions).toEqual([
     {
       btrfs: [],
@@ -199,5 +199,4 @@ test('Test Preset Disk Partition', () => {
       type: 'primary'
     }
   ]);
-
 });
