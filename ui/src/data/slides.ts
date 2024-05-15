@@ -1,4 +1,6 @@
-const slides = [
+import type { Slide } from "@/types/Slide";
+
+const slides: Array<Slide> = [
   {
     title: 'VasakOS',
     background: 'https://os.vasak.net.ar/img/hero-fullscreen-bg.jpg',
