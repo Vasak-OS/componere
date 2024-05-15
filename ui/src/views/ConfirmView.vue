@@ -3,6 +3,8 @@ import { inject, computed, ref, type Ref, onMounted } from 'vue';
 import CardComponent from '@/components/card/CardComponent.vue';
 import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
 import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
+import SlidesComponet from '@/components/SlidesComponet.vue';
+import installWarns from '@/data/installWarns';
 import { installationConfigStore } from '@/stores/installationConfig';
 import { vskDiskPartitionDTO } from '@/utils/diskUtils';
 import type { VSK } from '@/types/VSK';
@@ -65,6 +67,7 @@ onMounted(() => {
       />
     </div>
   </CardComponent>
+  <SlidesComponet :slides="installWarns" />
   <div class="componere-cta-section">
     <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left" /></button>
     <button @click="install"><font-awesome-icon icon="fa-download" /></button>
