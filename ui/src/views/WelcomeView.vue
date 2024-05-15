@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import SlidesComponet from '@/components/SlidesComponet.vue';
+import slides from '@/data/slides';
 import { ref, onMounted } from 'vue';
 
 const timezone = ref('');
@@ -23,7 +24,7 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <SlidesComponet />
+    <SlidesComponet :slides="slides" />
   </div>
   <div v-if="loading">
     <p>Loading...</p>
