@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-import slides from '@/data/slides';
 import { onMounted, ref } from 'vue';
+import type { Slide } from '@/types/Slide';
 
-const cantSlides = slides.length;
+const props = defineProps({
+  slides: Array<Slide>,
+});
+
+const cantSlides = props.slides?.length || 0;
 const currentSlide = ref(0);
 
 const nextSlide = () => {
@@ -28,8 +32,8 @@ onMounted(() => {
           <div class="slide" :style="`background-image: url(${slide.background});`">
             <div class="md:w-1/2">
               <p class="font-bold text-sm uppercase">{{ slide.title }}</p>
-              <p class="text-3xl font-bold">Hello world</p>
-              <p class="text-2xl mb-10 leading-none">{{ slide.title }}</p>
+              <p class="text-3xl font-bold">{{ slide.title }}</p>
+              <p class="text-2xl mb-10 leading-none">{{ slide.description }}</p>
             </div>
           </div>
           <!-- container -->
