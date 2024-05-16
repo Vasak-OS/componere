@@ -11,6 +11,8 @@ const config = installationConfigStore();
 const image = ref('');
 const username = ref('');
 const password = ref('');
+const showError = ref(false);
+const errorMessage = ref('');
 
 const addUser = (e) => {
   const newUser: User = {
@@ -25,6 +27,26 @@ const addUser = (e) => {
 
 const users: ComputedRef<User[]> = computed(() => config.userConfig['!users']);
 
+const verificarYContinuar = (): void => {
+  if (users.value.length > 0) {
+    $emit('nextSection');
+  } else {
+    showNoUsersError();
+  }
+};
+
+const dismissError = (): void => {
+  showError.value = false;
+};
+
+const showNoUsersError = async (): Promise<void> => {
+  showError.value = true;
+  errorMessage.value = 'No se han añadido usuarios';
+  setTimeout(() => {
+    showError.value = false;
+  }, 4000);
+};
+
 onMounted(() => {
   $vsk.getIcon('user_auth').then((img: string) => {
     image.value = img;
@@ -32,6 +54,17 @@ onMounted(() => {
 });
 </script>
 <template>
+    <div
+    class="componere-notification-error"
+    role="alert"
+    v-if="showError"
+  >
+    <span class="block sm:inline">{{ errorMessage }}</span>
+    
+    <span class="componere-notification-error-button" @click="dismissError">
+      <font-awesome-icon icon="fa-close"/>
+    </span>
+  </div>
   <div class="componere-user-section">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img class="mx-auto h-24 w-auto" :src="image" alt="Add user" />
@@ -83,11 +116,18 @@ onMounted(() => {
   </div>
   <div class="componere-user-list">
     <div class="componere-user-list-section">
-      <UserPictureComponent v-for="user in users" :key="user.username" :user="user" :canDelete="true" />
+      <UserPictureComponent
+        v-for="user in users"
+        :key="user.username"
+        :user="user"
+        :canDelete="true"
+      />
     </div>
   </div>
   <div class="componere-cta-section">
     <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left" /></button>
-    <button @click="$emit('nextSection')"><font-awesome-icon icon="fa-angle-right" /></button>
+    <button @click="verificarYContinuar">
+      <font-awesome-icon icon="fa-angle-right" />
+    </button>
   </div>
 </template>
