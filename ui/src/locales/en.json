@@ -1,0 +1,8 @@
+{
+  "userView": {
+    "noUsersError": "No users found",
+    "username": "Username",
+    "password": "Password",
+    "addUser": "Add User"
+  }
+}
