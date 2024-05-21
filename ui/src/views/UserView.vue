@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import { inject, ref, onMounted, computed, type ComputedRef } from 'vue';
+import { useI18n } from 'vue-i18n';
 import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
 import { installationConfigStore } from '@/stores/installationConfig';
 import type { VSK } from '@/types/VSK';
 import type { User } from '@/types/InstallationConfig';
 
-const $vsk = inject('vsk') as VSK;
+const $vsk: VSK = inject('vsk') as VSK;
+const { t } = useI18n();
 const $emit = defineEmits(['nextSection', 'prevSection']);
 const config = installationConfigStore();
 const image = ref('');
 const username = ref('');
 const password = ref('');
 const showError = ref(false);
-const errorMessage = ref('');
 
 const addUser = (e) => {
   const newUser: User = {
@@ -21,7 +22,6 @@ const addUser = (e) => {
     sudo: true
   };
   config.setUser(newUser);
-  //$emit('nextSection');
   e.preventDefault();
 };
 
@@ -41,7 +41,6 @@ const dismissError = (): void => {
 
 const showNoUsersError = async (): Promise<void> => {
   showError.value = true;
-  errorMessage.value = 'No se han añadido usuarios';
   setTimeout(() => {
     showError.value = false;
   }, 4000);
@@ -54,15 +53,11 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div
-    class="componere-notification-error"
-    role="alert"
-    v-if="showError"
-  >
-    <span class="block sm:inline">{{ errorMessage }}</span>
-    
+  <div class="componere-notification-error" role="alert" v-if="showError">
+    <span class="block sm:inline">{{ t('userView.noUsersError') }}</span>
+
     <span class="componere-notification-error-button" @click="dismissError">
-      <font-awesome-icon icon="fa-close"/>
+      <font-awesome-icon icon="fa-close" />
     </span>
   </div>
   <div class="componere-user-section">
@@ -73,9 +68,9 @@ onMounted(() => {
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" @submit="addUser">
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-            >Usuario</label
-          >
+          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">{{
+            t('userView.username')
+          }}</label>
           <div class="mt-2">
             <input
               id="username"
@@ -90,9 +85,9 @@ onMounted(() => {
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-              >Password</label
-            >
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">{{
+              t('userView.password')
+            }}</label>
           </div>
           <div class="mt-2">
             <input
@@ -108,7 +103,7 @@ onMounted(() => {
 
         <div>
           <button type="submit" class="componere-user-cta-button">
-            <font-awesome-icon icon="fa-user-plus" />
+            {{ t('userView.addUser') }} &nbsp; <font-awesome-icon icon="fa-user-plus" />
           </button>
         </div>
       </form>
