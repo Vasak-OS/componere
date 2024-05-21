@@ -20,25 +20,27 @@
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@vasakgroup/vue-libvasak": "^0.0.3",
     "pinia": "^2.1.7",
-    "vue": "^3.4.26"
+    "vue": "^3.4.27",
+    "vue-i18n": "^9.13.1"
   },
   "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^4.0.0",
     "@jest/globals": "^29.7.0",
-    "@rushstack/eslint-patch": "^1.10.2",
+    "@rushstack/eslint-patch": "^1.10.3",
     "@tsconfig/node18": "^18.2.4",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
-    "eslint": "^9.1.1",
-    "eslint-plugin-vue": "^9.25.0",
-    "npm-run-all2": "^6.1.2",
+    "eslint": "^9.3.0",
+    "eslint-plugin-vue": "^9.26.0",
+    "npm-run-all2": "^6.2.0",
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
     "typescript": "~5.4.5",
-    "vite": "^5.2.10",
-    "vue-tsc": "^2.0.15"
+    "vite": "^5.2.11",
+    "vue-tsc": "^2.0.19"
   }
 }
