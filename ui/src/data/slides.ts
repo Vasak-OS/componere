@@ -1,4 +1,4 @@
-import type { Slide } from "@/types/Slide";
+import type { Slide } from "../types/Slide";
 
 const slides: Array<Slide> = [
   {
