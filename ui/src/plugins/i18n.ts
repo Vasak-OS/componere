@@ -10,9 +10,12 @@ let i18n: ReturnType<typeof createI18n>;
 export const SUPPORT_LOCALES: Array<string> = ['es', 'en', 'pt', 'it'];
 
 export function setI18nLanguage(locale: string): Promise<void> {
-  i18n.global.locale = { value: locale };
-  document.querySelector('html')?.setAttribute('lang', locale);
-  localStorage.setItem('lang', locale);
+  if (SUPPORT_LOCALES.indexOf(locale.toLocaleLowerCase()) !== -1) {
+    i18n.global.locale = { value: locale };
+    document.querySelector('html')?.setAttribute('lang', locale);
+    localStorage.setItem('lang', locale);
+  }
+
   return nextTick();
 }
 
