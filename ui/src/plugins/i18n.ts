@@ -7,7 +7,7 @@ import pt from '@/locales/pt.json';
 
 export const i18n = defineStore('i18n', () => {
   const SUPPORT_LOCALES: Array<string> = ['es', 'en', 'pt', 'it'];
-  const locale: Ref<string> = ref('es');
+  const locale: Ref<string> = ref('en');
   const messages = {
     es,
     en,
@@ -26,7 +26,7 @@ export const i18n = defineStore('i18n', () => {
 
   function $t(key: string): string {
     console.info( localeMessages.value);
-    return eval(`localeMessages.value.${key}.b.s`) || key;
+    return eval(`localeMessages.value.${key}`) || key;
   }
 
   return {

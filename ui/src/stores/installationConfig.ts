@@ -180,5 +180,9 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     config.value.disk_config = diskConfig;
   }
 
-  return { config, userConfig, setUser, deleteUser, setDiskConfig };
+  function setTimeZone(timezone: string): void {
+    config.value.timezone = timezone;
+  }
+
+  return { config, userConfig, setUser, deleteUser, setDiskConfig, setTimeZone };
 });
