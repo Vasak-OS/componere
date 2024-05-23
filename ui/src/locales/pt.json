@@ -4,5 +4,8 @@
     "username": "Nome de usuário",
     "password": "Senha",
     "addUser": "Adicionar usuário"
+  },
+  "welcome": {
+    "language": "Idioma"
   }
 }
