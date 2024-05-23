@@ -20,11 +20,9 @@
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@vasakgroup/vue-libvasak": "^0.0.3",
     "pinia": "^2.1.7",
-    "vue": "^3.4.27",
-    "vue-i18n": "^9.13.1"
+    "vue": "^3.4.27"
   },
   "devDependencies": {
-    "@intlify/unplugin-vue-i18n": "^4.0.0",
     "@jest/globals": "^29.7.0",
     "@rushstack/eslint-patch": "^1.10.3",
     "@tsconfig/node18": "^18.2.4",
