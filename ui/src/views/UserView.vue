@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { inject, ref, onMounted, computed, type ComputedRef } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { i18n } from '@/plugins/i18n';
 import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
 import { installationConfigStore } from '@/stores/installationConfig';
 import type { VSK } from '@/types/VSK';
 import type { User } from '@/types/InstallationConfig';
 
 const $vsk: VSK = inject('vsk') as VSK;
-const { t } = useI18n();
+const { $t } = i18n();
 const $emit = defineEmits(['nextSection', 'prevSection']);
 const config = installationConfigStore();
 const image = ref('');
@@ -54,7 +54,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="componere-notification-error" role="alert" v-if="showError">
-    <span class="block sm:inline">{{ t('userView.noUsersError') }}</span>
+    <span class="block sm:inline">{{ $t('userView.noUsersError') }}</span>
 
     <span class="componere-notification-error-button" @click="dismissError">
       <font-awesome-icon icon="fa-close" />
@@ -69,7 +69,7 @@ onMounted(() => {
       <form class="space-y-6" @submit="addUser">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">{{
-            t('userView.username')
+            $t('userView.username')
           }}</label>
           <div class="mt-2">
             <input
@@ -86,7 +86,7 @@ onMounted(() => {
         <div>
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">{{
-              t('userView.password')
+              $t('userView.password')
             }}</label>
           </div>
           <div class="mt-2">
@@ -103,7 +103,7 @@ onMounted(() => {
 
         <div>
           <button type="submit" class="componere-user-cta-button">
-            {{ t('userView.addUser') }} &nbsp; <font-awesome-icon icon="fa-user-plus" />
+            {{ $t('userView.addUser') }} &nbsp; <font-awesome-icon icon="fa-user-plus" />
           </button>
         </div>
       </form>
