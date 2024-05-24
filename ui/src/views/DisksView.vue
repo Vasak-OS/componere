@@ -27,6 +27,11 @@ const diskConfig: Ref<DiskModificationConfig> = ref({
 });
 const useSWAP = ref(false);
 
+const swapChange = (): void => {
+  useSWAP.value = !useSWAP.value;
+  setDiskConfig();
+};
+
 const setDisks = async (): Promise<void> => {
   disks.value = await getDisks($vsk);
   setDiskSelected(disksAvailable.value[0]);
@@ -80,9 +85,18 @@ onMounted(() => {
   <select class="componere-select" v-model="diskSelected" @change="setDiskConfig">
     <option v-for="disk in disksAvailable" v-bind:key="disk">{{ disk }}</option>
   </select>
-  <div>
+  <div class="componere-swap-area">
     <label for="useSWAP">Use SWAP</label>
-    <input type="checkbox" v-model="useSWAP" @change="setDiskConfig" />
+    <label class="flex cursor-pointer select-none items-center">
+      <div class="relative">
+        <input type="checkbox" id="useSwap" class="sr-only" @change="swapChange" />
+        <div class="block h-8 w-14 rounded-full background"></div>
+        <div
+          class="dot absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition"
+          :class="{ 'translate-x-full bg-vsk': useSWAP }"
+        ></div>
+      </div>
+    </label>
   </div>
   <CardComponent>
     <DiskAreaComponent :name="selectedDisk?.name" :type="selectedDisk?.type">
