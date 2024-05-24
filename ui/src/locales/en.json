@@ -5,7 +5,11 @@
     "password": "Password",
     "addUser": "Add User"
   },
-  "welcome":{
+  "welcome": {
     "language": "Language"
+  },
+  "disk": {
+    "useSwap": "Use Swap",
+    "after": "After Installation"
   }
 }

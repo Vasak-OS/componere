@@ -7,5 +7,9 @@
   },
   "welcome": {
     "language": "Idioma"
+  },
+  "disk": {
+    "useSwap": "Usar swap",
+    "after": "Depois da instalação"
   }
 }

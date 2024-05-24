@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { inject, ref, type Ref, onMounted, computed } from 'vue';
+import { i18n } from '@/plugins/i18n';
 import { installationConfigStore } from '@/stores/installationConfig';
 import CardComponent from '@/components/card/CardComponent.vue';
 import DiskAreaComponent from '@/components/disk/DiskAreaComponent.vue';
@@ -19,6 +20,7 @@ import { getDisks } from '@/utils/vasakFunctions';
 
 const config = installationConfigStore();
 const $vsk = inject('vsk') as VSK;
+const { $t } = i18n();
 const disks: Ref<Array<VSKDisk>> = ref([]);
 const diskSelected: Ref<string> = ref('null');
 const diskConfig: Ref<DiskModificationConfig> = ref({
@@ -86,7 +88,7 @@ onMounted(() => {
     <option v-for="disk in disksAvailable" v-bind:key="disk">{{ disk }}</option>
   </select>
   <div class="componere-swap-area">
-    <label for="useSWAP">Use SWAP</label>
+    <label for="useSWAP">{{ $t('disk.useSwap') }}</label>
     <label class="flex cursor-pointer select-none items-center">
       <div class="relative">
         <input type="checkbox" id="useSwap" class="sr-only" @change="swapChange" />
@@ -108,7 +110,7 @@ onMounted(() => {
     <PartitionTableComponent :disk="selectedDisk" />
   </CardComponent>
   <CardComponent>
-    <h2 class="card-title">After</h2>
+    <h2 class="card-title">{{ $t('disk.after') }}</h2>
     <DiskSpaceComponent
       :partitions="emulatedFinalStatusPartitions"
       :diskSpace="selectedDisk?.size"
