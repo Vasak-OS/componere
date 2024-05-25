@@ -11,5 +11,13 @@
   "disk": {
     "useSwap": "Usar swap",
     "after": "Después de la Instalación"
+  },
+  "confirm": {
+    "disks": "Discos",
+    "users": "Usuarios",
+    "warn": {
+      "title": "Advertencia: Instalación de VasakOS",
+      "text": "Recuerda que durante la instalación de VasakOS se borrará todo el contenido de tu disco duro, asegúrate de tener una copia de seguridad de tus archivos."
+    }
   }
 }

@@ -11,5 +11,13 @@
   "disk": {
     "useSwap": "Usar swap",
     "after": "Depois da instalação"
+  },
+  "confirm": {
+    "disks": "Discos",
+    "users": "Usuários",
+    "warn": {
+      "title": "Aviso: Instalação do VasakOS",
+      "text": "Lembre-se que durante a instalação do VasakOS todo o conteúdo do seu disco rígido será apagado, certifique-se de fazer um backup dos seus arquivos."
+    }
   }
 }

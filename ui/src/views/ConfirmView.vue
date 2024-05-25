@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { inject, computed, ref, type Ref, onMounted } from 'vue';
+import { i18n } from '@/plugins/i18n';
 import CardComponent from '@/components/card/CardComponent.vue';
 import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
 import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
@@ -12,6 +13,7 @@ import type { VSKDiskPartition, VSKDisk } from '@/types/VSKDisk';
 import { getDisks } from '@/utils/vasakFunctions';
 
 const config = installationConfigStore();
+const { $t } = i18n();
 const $vsk: VSK = inject('vsk') as VSK;
 const disks: Ref<Array<VSKDisk>> = ref([]);
 
@@ -25,7 +27,7 @@ const install = async (): Promise<void> => {
 
 const setDisks = async (): Promise<void> => {
   disks.value = await getDisks($vsk);
-  console.log(selectedDisk.value)
+  console.log(selectedDisk.value);
 };
 
 const emulatedFinalStatusPartitions = computed((): VSKDiskPartition[] | undefined => {
@@ -35,7 +37,7 @@ const emulatedFinalStatusPartitions = computed((): VSKDiskPartition[] | undefine
 });
 
 const selectedDisk = computed((): VSKDisk => {
-  disks
+  disks;
   return (
     disks.value.find(
       (disk) => disk.deviceId === config.config.disk_config.device_modifications[0].device
@@ -50,14 +52,14 @@ onMounted(() => {
 
 <template>
   <CardComponent>
-    <h2 class="card-title"><font-awesome-icon icon="fa-hard-drive" /></h2>
+    <h2 class="card-title"><font-awesome-icon icon="fa-hard-drive" /> {{ $t('confirm.disks') }}</h2>
     <DiskSpaceComponent
       :partitions="emulatedFinalStatusPartitions"
       :diskSpace="selectedDisk?.size"
     />
   </CardComponent>
   <CardComponent>
-    <h2 class="card-title"><font-awesome-icon icon="fa-users" /></h2>
+    <h2 class="card-title"><font-awesome-icon icon="fa-users" /> {{ $t('confirm.users') }}</h2>
     <div class="card-body componere-confirm-users-list">
       <UserPictureComponent
         v-for="user in config.userConfig['!users']"

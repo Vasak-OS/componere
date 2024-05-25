@@ -11,5 +11,13 @@
   "disk": {
     "useSwap": "Use Swap",
     "after": "After Installation"
+  },
+  "confirm": {
+    "disks": "Disks",
+    "users": "Users",
+    "warn": { 
+      "title": "Warning: VasakOS Installation",
+      "text": "Remember that during the installation of VasakOS, all the content of your hard drive will be erased, make sure to have a backup of your files."
+    }
   }
 }
