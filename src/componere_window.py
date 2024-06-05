@@ -1,6 +1,6 @@
 from Vasak.VSKWindow import VSKWindow
 from Vasak.system.VSKConfigManager import VSKConfigManager
-from src.ComponereBinding import ComponereBinding
+from src.componere_binding import ComponereBinding
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtCore import Qt
 

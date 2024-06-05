@@ -1,7 +1,7 @@
 import os
 import sys
 import signal
-from src.ComponereWindow import ComponereWindow
+from src.componere_window import ComponereWindow
 from PyQt6.QtCore import QFileSystemWatcher
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QIcon
