@@ -51,7 +51,7 @@ const setDiskSelected = async (disk: string): Promise<void> => {
 const setDiskConfig = async (): Promise<void> => {
   var swapSize = 0;
   if (selectedDisk.value !== undefined) {
-    diskConfig.value.device = selectedDisk.value.deviceId;
+    diskConfig.value.device = selectedDisk.value.path;
     if (useSWAP.value) {
       const ram = JSON.parse(await $vsk.getHardInfo()).ram;
       swapSize = calcuclateSwapSize(ram * 1024);
