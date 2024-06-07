@@ -2,6 +2,7 @@
 import { inject, computed, ref, type Ref, onMounted } from 'vue';
 import { i18n } from '@/plugins/i18n';
 import CardComponent from '@/components/card/CardComponent.vue';
+import WarnComponent from '@/components/card/WarnComponent.vue';
 import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
 import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
 import SlidesComponet from '@/components/SlidesComponet.vue';
@@ -69,7 +70,10 @@ onMounted(() => {
       />
     </div>
   </CardComponent>
-  <SlidesComponet :slides="installWarns" />
+  <WarnComponent>
+    <h2 class="card-title">{{ $t('confirm.warn.title') }}</h2>
+    <p>{{ $t('confirm.warn.text') }}</p>
+  </WarnComponent>
   <div class="componere-cta-section">
     <button @click="$emit('prevSection')"><font-awesome-icon icon="fa-angle-left" /></button>
     <button @click="install"><font-awesome-icon icon="fa-download" /></button>
