@@ -1,9 +1,9 @@
 import os
 import json
 from PyQt6.QtCore import pyqtSlot, QObject, Qt
-from Vasak.system.VSKIconManager import VSKIconManager
-from Vasak.hardware.VSKDisks import VSKDisks
-from Vasak.hardware.VSKInfoHard import VSKInfoHard
+from Vasak.system.vsk_icon_manager import VSKIconManager
+from Vasak.hardware.vsk_disks import VSKDisks
+from Vasak.hardware.vsk_info_hard import VSKInfoHard
 from Vasak.application.vsk_shell_connector import VSKShellConnector
 
 class ComponereBinding(QObject):
@@ -89,7 +89,7 @@ class ComponereBinding(QObject):
 
   @pyqtSlot()
   def install(self):
-    self.shell.run("sudo archinstall --config /tmp/config.json --creds /tmp/user.json --dry-run", True)
+    self.shell.run("archinstall --config /tmp/config.json --creds /tmp/user.json --dry-run", True)
  
   @pyqtSlot(result=str)
   def getDisks(self):
