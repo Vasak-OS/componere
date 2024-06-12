@@ -31,6 +31,12 @@ const setDisks = async (): Promise<void> => {
   console.log(selectedDisk.value);
 };
 
+const totalDiskSpace = computed((): number => {
+  return config.config.disk_config.device_modifications[0].partitions.reduce((acc, partition) => {
+    return acc + partition.length.value;
+  }, 0) * 1024 * 1024;
+});
+
 const emulatedFinalStatusPartitions = computed((): VSKDiskPartition[] | undefined => {
   return config.config.disk_config.device_modifications[0].partitions.map((partition) => {
     return vskDiskPartitionDTO(partition);
@@ -56,7 +62,7 @@ onMounted(() => {
     <h2 class="card-title"><font-awesome-icon icon="fa-hard-drive" /> {{ $t('confirm.disks') }}</h2>
     <DiskSpaceComponent
       :partitions="emulatedFinalStatusPartitions"
-      :diskSpace="selectedDisk?.size"
+      :diskSpace="totalDiskSpace"
     />
   </CardComponent>
   <CardComponent>
