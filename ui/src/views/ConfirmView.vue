@@ -5,8 +5,7 @@ import CardComponent from '@/components/card/CardComponent.vue';
 import WarnComponent from '@/components/card/WarnComponent.vue';
 import DiskSpaceComponent from '@/components/disk/DiskSpaceComponent.vue';
 import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
-import SlidesComponet from '@/components/SlidesComponet.vue';
-import installWarns from '@/data/installWarns';
+import LoadingComponent from '@/components/LoadingComponent.vue';
 import { installationConfigStore } from '@/stores/installationConfig';
 import { vskDiskPartitionDTO } from '@/utils/diskUtils';
 import type { VSK } from '@/types/VSK';
@@ -17,13 +16,16 @@ const config = installationConfigStore();
 const { $t } = i18n();
 const $vsk: VSK = inject('vsk') as VSK;
 const disks: Ref<Array<VSKDisk>> = ref([]);
+const installing: Ref<boolean> = ref(false);
 
 const install = async (): Promise<void> => {
+  installing.value = true;
   const installData = JSON.stringify(config.config);
   const userData = JSON.stringify(config.userConfig);
   await $vsk.save(installData, 'config.json');
   await $vsk.save(userData, 'user.json');
   await $vsk.install();
+  installing.value = false;
 };
 
 const setDisks = async (): Promise<void> => {
@@ -52,6 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <LoadingComponent v-if="installing" />
   <CardComponent>
     <h2 class="card-title"><font-awesome-icon icon="fa-hard-drive" /> {{ $t('confirm.disks') }}</h2>
     <DiskSpaceComponent
