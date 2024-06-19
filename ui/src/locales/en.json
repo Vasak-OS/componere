@@ -19,5 +19,9 @@
       "title": "Warning: VasakOS Installation",
       "text": "Remember that during the installation of VasakOS, all the content of your hard drive will be erased, make sure to have a backup of your files."
     }
+  },
+  "end":{
+    "title": "Installation Complete",
+    "text": "The installation of VasakOS has been completed successfully. You can now restart your computer and enjoy your new operating system."
   }
 }

@@ -19,5 +19,9 @@
       "title": "Avvertenza: installazione di VasakOS",
       "text": "Ricorda che durante l'installazione di VasakOS, tutto il contenuto del tuo disco rigido verrà cancellato, assicurati di avere un backup dei tuoi file."
     }
+  },
+  "end": {
+    "title": "Installazione completata",
+    "text": "L'installazione di VasakOS è stata completata con successo. Rimuovi il supporto di installazione e riavvia il computer."
   }
 }

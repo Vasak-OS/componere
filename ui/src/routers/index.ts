@@ -1,5 +1,6 @@
 import ConfirmView from '@/views/ConfirmView.vue';
 import DisksView from '@/views/DisksView.vue';
+import EndView from '@/views/EndView.vue';
 import UserView from '@/views/UserView.vue';
 import WelcomeView from '../views/WelcomeView.vue';
 import type { VSKRoute } from '@/types/VSKRoute';
@@ -28,6 +29,12 @@ const routers: Array<VSKRoute> = [
     image: 'help-info',
     tag: 'CONFIRM',
     component: ConfirmView
+  },
+  {
+    title: 'End',
+    image: 'help-info',
+    tag: 'END',
+    component: EndView
   }
 ];
 

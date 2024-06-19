@@ -19,5 +19,9 @@
       "title": "Advertencia: Instalación de VasakOS",
       "text": "Recuerda que durante la instalación de VasakOS se borrará todo el contenido de tu disco duro, asegúrate de tener una copia de seguridad de tus archivos."
     }
+  },
+  "end": {
+    "title": "Instalación completada",
+    "text": "La instalación de VasakOS ha finalizado con éxito. Puedes reiniciar tu ordenador y disfrutar de tu nuevo sistema operativo."
   }
 }

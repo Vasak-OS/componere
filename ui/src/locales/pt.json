@@ -19,5 +19,9 @@
       "title": "Aviso: Instalação do VasakOS",
       "text": "Lembre-se que durante a instalação do VasakOS todo o conteúdo do seu disco rígido será apagado, certifique-se de fazer um backup dos seus arquivos."
     }
+  },
+  "end": {
+    "title": "Instalação concluída",
+    "text": "A instalação do VasakOS foi concluída com sucesso. Clique em 'Reiniciar' para reiniciar o computador."
   }
 }
