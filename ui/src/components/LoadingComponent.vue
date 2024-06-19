@@ -1,10 +1,8 @@
 <template>
-    <div class="flex items-center justify-center h-screen">
-    <div class="relative">
-      <div class="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-      <div
-        class="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-vsk animate-spin"
-      ></div>
+  <div class="loading">
+    <div>
+      <div class="loading-shadow"></div>
+      <div class="loading-spinner"></div>
     </div>
   </div>
 </template>
