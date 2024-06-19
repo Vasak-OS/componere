@@ -10,7 +10,7 @@ class ComponereWindow(VSKWindow):
         self.shareObject = ComponereBinding(self, app)
         self.configManager = VSKConfigManager()
         self.channel.registerObject("vsk", self.shareObject)
-        self.load_html("ui/dist/index.html") # Cargar un HTML en el WebView
+        self.load_html("/usr/share/componere/ui/dist/index.html") # Cargar un HTML en el WebView
         self.set_position()
 
     def set_position(self):
