@@ -18,16 +18,25 @@ const $vsk: VSK = inject('vsk') as VSK;
 const $emit = defineEmits(['nextSection', 'prevSection']);
 const disks: Ref<Array<VSKDisk>> = ref([]);
 const installing: Ref<boolean> = ref(false);
+const showError:Ref<boolean> = ref(false);
+const errorData: Ref<string> = ref('');
 
 const install = async (): Promise<void> => {
-  installing.value = true;
-  const installData = JSON.stringify(config.config);
-  const userData = JSON.stringify(config.userConfig);
-  await $vsk.save(installData, 'config.json');
-  await $vsk.save(userData, 'user.json');
-  await $vsk.install();
-  installing.value = false;
-  $emit('nextSection');
+  try {
+    installing.value = true;
+    const installData = JSON.stringify(config.config);
+    const userData = JSON.stringify(config.userConfig);
+    await $vsk.save(installData, 'config.json');
+    await $vsk.save(userData, 'user.json');
+    await $vsk.install();
+    installing.value = false;
+    $emit('nextSection');
+  } catch (error: any) {
+    errorData.value = error?.message || 'Error';
+    showInstallError();
+    installing.value = false;
+    console.error(error);
+  }
 };
 
 const setDisks = async (): Promise<void> => {
@@ -50,12 +59,30 @@ const selectedDisk = computed((): VSKDisk => {
   );
 });
 
+const dismissError = (): void => {
+  showError.value = false;
+};
+
+const showInstallError = async (): Promise<void> => {
+  showError.value = true;
+  setTimeout(() => {
+    showError.value = false;
+  }, 4000);
+};
+
 onMounted(() => {
   setDisks();
 });
 </script>
 
 <template>
+  <div class="componere-notification-error" role="alert" v-if="showError">
+    <span class="block sm:inline">{{ errorData }}</span>
+
+    <span class="componere-notification-error-button" @click="dismissError">
+      <font-awesome-icon icon="fa-close" />
+    </span>
+  </div>
   <LoadingComponent v-if="installing" />
   <CardComponent>
     <h2 class="card-title"><font-awesome-icon icon="fa-hard-drive" /> {{ $t('confirm.disks') }}</h2>
