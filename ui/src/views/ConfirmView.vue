@@ -15,6 +15,7 @@ import { getDisks } from '@/utils/vasakFunctions';
 const config = installationConfigStore();
 const { $t } = i18n();
 const $vsk: VSK = inject('vsk') as VSK;
+const $emit = defineEmits(['nextSection', 'prevSection']);
 const disks: Ref<Array<VSKDisk>> = ref([]);
 const installing: Ref<boolean> = ref(false);
 
@@ -26,6 +27,7 @@ const install = async (): Promise<void> => {
   await $vsk.save(userData, 'user.json');
   await $vsk.install();
   installing.value = false;
+  $emit('nextSection');
 };
 
 const setDisks = async (): Promise<void> => {
