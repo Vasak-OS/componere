@@ -42,7 +42,7 @@ export const getPrimaryPartitionData = (partitionData: {
       value: partitionData.size
     },
     mount_options: [],
-    mountpoint: null,
+    mountpoint: mountPoint(partitionData.name as DiskFlags),
     obj_id: '',
     start: {
       sector_size: null,
@@ -54,6 +54,19 @@ export const getPrimaryPartitionData = (partitionData: {
     type: 'primary'
   };
 };
+
+const mountPoint = (flag: DiskFlags): string => {
+  switch (flag) {
+    case 'Boot':
+      return '/boot';
+    case 'Root':
+      return '/';
+    case 'Swap':
+      return 'swap';
+    default:
+      return '';
+  }
+}
 
 export const presetDiskPartition = (partitionData: {
   bootloader: BootLoader;

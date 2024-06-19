@@ -17,7 +17,7 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     config_version: '2.6.0',
     debug: false,
     disk_config: {
-      config_type: 'manual_partitioning',
+      config_type: 'default_layout',
       device_modifications: [
         {
           device: '/dev/sda',
@@ -114,7 +114,7 @@ export const installationConfigStore = defineStore('installationConfig', () => {
               type: 'primary'
             }
           ],
-          wipe: false
+          wipe: true
         }
       ]
     },
