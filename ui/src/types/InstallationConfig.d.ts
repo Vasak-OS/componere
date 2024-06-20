@@ -4,10 +4,10 @@ export type InstallationConfig = {
   'archinstall-language'?: string;
   audio_config?: any;
   bootloader: BootLoader;
-  config_version: string;
+  config_version?: string;
   debug?: boolean;
   disk_config: DiskConfig;
-  disk_encryption: {
+  disk_encryption?: {
     encryption_type: EncryptionType;
     partitions: Array<string>;
   };
@@ -30,7 +30,7 @@ export type InstallationConfig = {
   silent: boolean;
   swap: boolean;
   timezone: string;
-  version: string;
+  version?: string;
 };
 
 export type InstallationUserConfig = {
@@ -78,7 +78,7 @@ export type DiskModificationConfig = {
 
 export type Partition = {
   btrfs: Array<DiskMount>;
-  dev_path?: any;
+  dev_path: string;
   flags: Array<DiskFlags>;
   fs_type: FileSystemType;
   size: DiskSectorSize;
@@ -90,9 +90,9 @@ export type Partition = {
   type: DiskType;
 };
 
-export type FileSystemType = 'ext4' | 'btrfs' | 'fat32' | 'swap';
+export type FileSystemType = 'ext4' | 'btrfs' | 'fat32';
 
-export type DiskFlags = 'Boot' | 'Root' | 'Swap';
+export type DiskFlags = 'Boot';
 
 export type DiskType = 'primary' | 'extended' | 'logical';
 
