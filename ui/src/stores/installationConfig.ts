@@ -13,11 +13,10 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     'additional-repositories': ['multilib'],
     'archinstall-language': 'English',
     audio_config: { audio: 'pipewire' },
-    bootloader: 'Systemd-boot',
-    config_version: '2.6.0',
+    bootloader: 'grub',
     debug: false,
     disk_config: {
-      config_type: 'default_layout',
+      config_type: 'manual_partitioning',
       device_modifications: [
         {
           device: '/dev/sda',
@@ -25,6 +24,7 @@ export const installationConfigStore = defineStore('installationConfig', () => {
             {
               btrfs: [],
               flags: ['Boot'],
+              dev_path: '/dev/sda1',
               fs_type: 'fat32',
               size: {
                 sector_size: null,
@@ -54,11 +54,7 @@ export const installationConfigStore = defineStore('installationConfig', () => {
         }
       ]
     },
-    disk_encryption: {
-      encryption_type: 'luks',
-      partitions: ['3e75d045-21a4-429d-897e-8ec19a006e8b']
-    },
-    hostname: 'archlinux',
+    hostname: 'vasakos',
     kernels: ['linux'],
     locale_config: {
       kb_layout: 'us',
@@ -92,7 +88,7 @@ export const installationConfigStore = defineStore('installationConfig', () => {
     profile_config: null,
     save_config: null,
     script: 'guided',
-    silent: false,
+    silent: true,
     swap: true,
     timezone: 'UTC',
     version: '2.6.0'

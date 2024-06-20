@@ -26,8 +26,8 @@ export const getBootLoaderPartitionData = (bootloader: BootLoader): Partition =>
   getPrimaryPartitionData({
     name: 'Boot',
     fsType: bootloader === 'grub' ? 'ext4' : 'fat32',
-    size: 512,
-    start: 0
+    size: 513,
+    start: 1
   });
 
 export const getPrimaryPartitionData = (partitionData: {
@@ -38,8 +38,9 @@ export const getPrimaryPartitionData = (partitionData: {
 }): Partition => {
   return {
     btrfs: [],
-    flags: [partitionData.name as DiskFlags],
+    flags: (partitionData.name as DiskFlags) == 'Boot' ? [partitionData.name as DiskFlags] : [],
     fs_type: partitionData.fsType as FileSystemType,
+    dev_path: '/dev/sda',
     size: {
       sector_size: {
         sector_size: null,
@@ -52,7 +53,7 @@ export const getPrimaryPartitionData = (partitionData: {
       value: partitionData.size
     },
     mount_options: [],
-    mountpoint: mountPoint(partitionData.name as DiskFlags),
+    mountpoint: mountPoint(partitionData.name),
     obj_id: '',
     start: {
       sector_size: {
@@ -70,7 +71,7 @@ export const getPrimaryPartitionData = (partitionData: {
   };
 };
 
-const mountPoint = (flag: DiskFlags): string => {
+const mountPoint = (flag: string): string => {
   switch (flag) {
     case 'Boot':
       return '/boot';
@@ -90,9 +91,9 @@ export const presetDiskPartition = (partitionData: {
 }): Array<Partition> => {
   const partitions: Array<Partition> = [];
   partitions.push(getBootLoaderPartitionData(partitionData.bootloader));
-  const rootSize = partitionData.diskSize - 512 - partitionData.swapSize;
+  const rootSize = partitionData.diskSize - 513 - partitionData.swapSize;
   partitions.push(
-    getPrimaryPartitionData({ name: 'Root', fsType: 'ext4', size: rootSize, start: 512 })
+    getPrimaryPartitionData({ name: 'Root', fsType: 'ext4', size: rootSize, start: 513 })
   );
   if (partitionData.swapSize > 0) {
     partitions.push(
@@ -100,7 +101,7 @@ export const presetDiskPartition = (partitionData: {
         name: 'Swap',
         fsType: 'swap',
         size: partitionData.swapSize,
-        start: rootSize + 512
+        start: rootSize + 513
       })
     );
   }
