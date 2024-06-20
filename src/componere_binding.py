@@ -89,7 +89,7 @@ class ComponereBinding(QObject):
 
   @pyqtSlot()
   def install(self):
-    self.shell.run("archinstall --config /tmp/config.json --creds /tmp/user.json", True)
+    self.shell.run("sudo archinstall --config /tmp/config.json --creds /tmp/user.json", True)
  
   @pyqtSlot(result=str)
   def getDisks(self):
