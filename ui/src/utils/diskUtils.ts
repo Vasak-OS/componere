@@ -45,7 +45,12 @@ export const getPrimaryPartitionData = (partitionData: {
     mountpoint: mountPoint(partitionData.name as DiskFlags),
     obj_id: '',
     start: {
-      sector_size: null,
+      sector_size: {
+        sector_size: null,
+        total_size: null,
+        unit: 'MB',
+        value: partitionData.start
+      },
       total_size: null,
       unit: 'MB',
       value: partitionData.start
