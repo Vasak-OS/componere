@@ -26,7 +26,7 @@ export const installationConfigStore = defineStore('installationConfig', () => {
               btrfs: [],
               flags: ['Boot'],
               fs_type: 'fat32',
-              length: {
+              size: {
                 sector_size: null,
                 total_size: null,
                 unit: 'B',

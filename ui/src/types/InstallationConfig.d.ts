@@ -81,7 +81,7 @@ export type Partition = {
   dev_path?: any;
   flags: Array<DiskFlags>;
   fs_type: FileSystemType;
-  length: DiskSectorSize;
+  size: DiskSectorSize;
   mount_options: Array<string>;
   mountpoint: any;
   obj_id: string;
