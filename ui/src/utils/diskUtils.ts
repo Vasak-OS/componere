@@ -23,7 +23,12 @@ export const bytesToMB = (bytes: number): number => {
 };
 
 export const getBootLoaderPartitionData = (bootloader: BootLoader): Partition =>
-  getPrimaryPartitionData({ name: 'Boot', fsType: bootloader === 'grub' ? 'ext4' : 'fat32', size: 512, start: 0 });
+  getPrimaryPartitionData({
+    name: 'Boot',
+    fsType: bootloader === 'grub' ? 'ext4' : 'fat32',
+    size: 512,
+    start: 0
+  });
 
 export const getPrimaryPartitionData = (partitionData: {
   name: string;
@@ -35,8 +40,13 @@ export const getPrimaryPartitionData = (partitionData: {
     btrfs: [],
     flags: [partitionData.name as DiskFlags],
     fs_type: partitionData.fsType as FileSystemType,
-    length: {
-      sector_size: null,
+    size: {
+      sector_size: {
+        sector_size: null,
+        total_size: null,
+        unit: 'MB',
+        value: partitionData.size
+      },
       total_size: null,
       unit: 'MB',
       value: partitionData.size
@@ -71,7 +81,7 @@ const mountPoint = (flag: DiskFlags): string => {
     default:
       return '';
   }
-}
+};
 
 export const presetDiskPartition = (partitionData: {
   bootloader: BootLoader;
@@ -111,7 +121,7 @@ export const calcuclateSwapSize = (memory: number): number => {
 export const vskDiskPartitionDTO = (partition: Partition): VSKDiskPartition => {
   return {
     path: partition.mountpoint,
-    size: partition.length.value * 1024 * 1024,
+    size: partition.size.value * 1024 * 1024,
     name: partition.obj_id,
     offset: partition.start.value,
     type: partition.type,
