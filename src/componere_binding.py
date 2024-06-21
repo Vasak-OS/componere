@@ -5,6 +5,7 @@ from Vasak.system.vsk_icon_manager import VSKIconManager
 from Vasak.hardware.vsk_disks import VSKDisks
 from Vasak.hardware.vsk_info_hard import VSKInfoHard
 from Vasak.application.vsk_shell_connector import VSKShellConnector
+from componere_partition_manager import ComponerePartitionManager
 
 class ComponereBinding(QObject):
   def __init__(self, window, app):
@@ -15,6 +16,7 @@ class ComponereBinding(QObject):
     self.disks = VSKDisks()
     self.infoHard = VSKInfoHard()
     self.shell = VSKShellConnector()
+    self.partitionManager = ComponerePartitionManager()
 
   @pyqtSlot(result=str)
   def getHome(self):
@@ -95,6 +97,33 @@ class ComponereBinding(QObject):
   def getDisks(self):
     return str(self.disks.getDisksList())
   
-  @pyqtSlot( result=str)
+  @pyqtSlot(result=str)
   def getHardInfo(self):
     return json.dumps(self.infoHard.getInfo())
+  
+  @pyqtSlot(str)
+  def setDisk(self, disk):
+    self.partitionManager.setDisk(disk)
+    self.partitionManager.createPartitionList()
+  
+  @pyqtSlot(int ,int)
+  def createUEFIBootPartition(self, start, end):
+    self.partitionManager.createUEFIBootPartition(start, end)
+  
+  @pyqtSlot(int, int)
+  def createLegacyBootPartition(self, start, end):
+    self.partitionManager.createLegacyBootPartition(start, end)
+  
+  @pyqtSlot(int, int)
+  def createSwapPartition(self, start, end):
+    self.partitionManager.createSwapPartition(start, end)
+
+  @pyqtSlot(int, int)
+  def createRootPartition(self, start, end):
+    self.partitionManager.createRootPartition(start, end)
+  
+  @pyqtSlot(int, int)
+  def createHomePartition(self, start, end):
+    self.partitionManager.createHomePartition(start, end)
+
+  
