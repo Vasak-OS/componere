@@ -1,4 +1,5 @@
 import parted
+import json
 
 class ComponerePartitionManager:
   def __init__(self):
@@ -48,3 +49,39 @@ class ComponerePartitionManager:
   def wipeDisk(self):
     self.disk.deleteAllPartitions()
     self.disk.commit()
+  
+  def mbToSectors(self, mb):
+    # 1 MB = 1000000 bytes = 1000000 / sectorSize sectors
+    return mb * 1000000 / self.device.sectorSize
+
+if __name__ == "__main__":
+  partitionManager = ComponerePartitionManager()
+  configFile = open("/tmp/config.json", "r")
+  config = json.load(configFile)
+
+  for device in config["disk_config"]["device_modifications"]:
+    partitionManager.setDisk(device["device"])
+    partitionManager.createPartitionList()
+
+    for partition in device["partitions"]:
+      if partition["fs_type"] == "fat32": 
+        switcherPartitionType = {
+          "/boot": partitionManager.createUEFIBootPartition,
+          "swap": partitionManager.createSwapPartition,
+          "/": partitionManager.createRootPartition,
+          "/home": partitionManager.createHomePartition
+        }
+      else:
+        switcherPartitionType = {
+          "/boot": partitionManager.createLegacyBootPartition,
+          "swap": partitionManager.createSwapPartition,
+          "/": partitionManager.createRootPartition,
+          "/home": partitionManager.createHomePartition
+        }
+
+      start = partitionManager.mbToSectors(int(partition["start"]["value"]))
+      end = partitionManager.mbToSectors(int(partition["size"]["value"]) + start)
+
+      switcherPartitionType[partition["mountpoint"]](start, end)
+
+  configFile.close()
