@@ -8,6 +8,7 @@ import UserPictureComponent from '@/components/user/UserPictureComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';
 import { installationConfigStore } from '@/stores/installationConfig';
 import { vskDiskPartitionDTO } from '@/utils/diskUtils';
+import { formatDisk } from '@/utils/formatUtils';
 import type { VSK } from '@/types/VSK';
 import type { VSKDiskPartition, VSKDisk } from '@/types/VSKDisk';
 import { getDisks } from '@/utils/vasakFunctions';
@@ -18,12 +19,14 @@ const $vsk: VSK = inject('vsk') as VSK;
 const $emit = defineEmits(['nextSection', 'prevSection']);
 const disks: Ref<Array<VSKDisk>> = ref([]);
 const installing: Ref<boolean> = ref(false);
-const showError:Ref<boolean> = ref(false);
+const showError: Ref<boolean> = ref(false);
 const errorData: Ref<string> = ref('');
 
 const install = async (): Promise<void> => {
   try {
     installing.value = true;
+    const formatedDiskData = await formatDisk(config.config.disk_config, $vsk);
+    config.setDiskConfig(formatedDiskData);
     const installData = JSON.stringify(config.config);
     const userData = JSON.stringify(config.userConfig);
     await $vsk.save(installData, 'config.json');
