@@ -25,8 +25,7 @@ const errorData: Ref<string> = ref('');
 const install = async (): Promise<void> => {
   try {
     installing.value = true;
-    const formatedDiskData = await formatDisk(config.config.disk_config, $vsk);
-    config.setDiskConfig(formatedDiskData);
+    await formatDisk(config.config.disk_config, $vsk);
     const installData = JSON.stringify(config.config);
     const userData = JSON.stringify(config.userConfig);
     await $vsk.save(installData, 'config.json');
