@@ -26,10 +26,8 @@ const install = async (): Promise<void> => {
   try {
     installing.value = true;
     await formatDisk(config.config.disk_config, $vsk);
-    const installData = JSON.stringify(config.config);
-    const userData = JSON.stringify(config.userConfig);
-    await $vsk.save(installData, 'config.json');
-    await $vsk.save(userData, 'user.json');
+    await $vsk.save(JSON.stringify(config.config), 'config.json');
+    await $vsk.save(JSON.stringify(config.userConfig), 'user.json');
     await $vsk.install();
     installing.value = false;
     $emit('nextSection');
@@ -43,7 +41,6 @@ const install = async (): Promise<void> => {
 
 const setDisks = async (): Promise<void> => {
   disks.value = await getDisks($vsk);
-  console.log(selectedDisk.value);
 };
 
 const emulatedFinalStatusPartitions = computed((): VSKDiskPartition[] | undefined => {
