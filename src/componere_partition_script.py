@@ -3,7 +3,6 @@ import json
 
 class ComponerePartitionManager:
   def __init__(self):
-    partitionType = "msdos"
     device = None
     disk = None
   
@@ -11,39 +10,33 @@ class ComponerePartitionManager:
     self.device = parted.getDevice(disk)
   
   def createPartitionList(self):
-    self.disk = parted.freshDisk(self.device, self.partitionType)
-    self.disk.commitToDisk(parted.PARTITION_TABLE_MBR                                                                )
-  
+    self.disk = parted.freshDisk(self.device, "msdos")
+
   def createUEFIBootPartition(self, start, end):
-    part = parted.Partition(self.disk, parted.PARTITION_BOOT, parted.fsType("fat32"), start, end)
+    geometry = parted.Geometry(self.device, start, None, end)
+    part = parted.Partition(self.disk, parted.PARTITION_BOOT, parted.FileSystem("fat32", geometry), geometry)
     part.setFlag(parted.PARTITION_BOOT)
-    self.disk.addPartition(part)
+    self.disk.addPartition(partition=part, constraint=self.device.optimalAlignedConstraint)
     self.disk.commit()
 
   def createLegacyBootPartition(self, start, end):
-    part = parted.Partition(self.disk, parted.PARTITION_NORMAL, parted.fsType("ext4"), start, end)
+    geometry = parted.Geometry(self.device, start, None, end)
+    part = parted.Partition(self.disk, parted.PARTITION_NORMAL, parted.FileSystem("ext4", geometry), geometry)
     part.setFlag(parted.PARTITION_BOOT)
-    self.disk.addPartition(part)
+    self.disk.addPartition(partition=part, constraint=self.device.optimalAlignedConstraint)
     self.disk.commit()
 
   def createSwapPartition(self, start, end):
-    part = parted.Partition(self.disk, parted.PARTITION_NORMAL, parted.fsType("swap"), start, end)
+    geometry = parted.Geometry(self.device, start, None, end)
+    part = parted.Partition(self.disk, parted.PARTITION_NORMAL, parted.FileSystem("swap", geometry), geometry)
     part.setFlag(parted.PARTITION_SWAP)
-    self.disk.addPartition(part)
+    self.disk.addPartition(partition=part, constraint=self.device.optimalAlignedConstraint)
     self.disk.commit()
   
-  def createRootPartition(self, start, end):
-    part = parted.Partition(self.disk, parted.PARTITION_NORMAL, parted.fsType("ext4"), start, end)
-    part.setFlag(parted.PARTITION_ROOT)
-    part.set_name("VasakOS")
-    self.disk.addPartition(part)
-    self.disk.commit()
-
-  def createHomePartition(self, start, end):
-    part = parted.Partition(self.disk, parted.PARTITION_NORMAL, parted.fsType("ext4"), start, end)
-    part.setFlag(parted.PARTITION_HOME)
-    part.set_name("VasakOSHome")
-    self.disk.addPartition(part)
+  def createExt4Partition(self, start, end):
+    geometry = parted.Geometry(self.device, start, None, end)
+    part = parted.Partition(self.disk, parted.PARTITION_NORMAL, parted.FileSystem("ext4", geometry), geometry)
+    self.disk.addPartition(partition=part, constraint=self.device.optimalAlignedConstraint)
     self.disk.commit()
 
   def wipeDisk(self):
@@ -68,20 +61,22 @@ if __name__ == "__main__":
         switcherPartitionType = {
           "/boot": partitionManager.createUEFIBootPartition,
           "swap": partitionManager.createSwapPartition,
-          "/": partitionManager.createRootPartition,
-          "/home": partitionManager.createHomePartition
+          "/": partitionManager.createExt4Partition,
+          "/home": partitionManager.createExt4Partition
         }
       else:
         switcherPartitionType = {
           "/boot": partitionManager.createLegacyBootPartition,
           "swap": partitionManager.createSwapPartition,
-          "/": partitionManager.createRootPartition,
-          "/home": partitionManager.createHomePartition
+          "/": partitionManager.createExt4Partition,
+          "/home": partitionManager.createExt4Partition
         }
 
-      start = partitionManager.mbToSectors(int(partition["start"]["value"]))
-      end = partitionManager.mbToSectors(int(partition["size"]["value"]) + start)
+      start = int(partitionManager.mbToSectors(int(partition["start"]["value"])))
+      end = int(partitionManager.mbToSectors(int(partition["size"]["value"]) + start))
 
       switcherPartitionType[partition["mountpoint"]](start, end)
+
+      partitionManager.wipeDisk()
 
   configFile.close()
