@@ -84,7 +84,7 @@ export type Partition = {
   size: DiskSectorSize;
   mount_options: Array<string>;
   mountpoint: any;
-  obj_id: string;
+  obj_id: string | null;
   start: DiskSectorSize;
   status: DiskStatus;
   type: DiskType;
