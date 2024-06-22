@@ -59,7 +59,8 @@ const setDiskConfig = async (): Promise<void> => {
     diskConfig.value.partitions = presetDiskPartition({
       bootloader: config.config.bootloader,
       swapSize,
-      diskSize: bytesToMB(selectedDisk.value.size)
+      diskSize: bytesToMB(selectedDisk.value.size),
+      path: selectedDisk.value.path
     });
     config.setDiskConfig({
       config_type: 'manual_partitioning',
