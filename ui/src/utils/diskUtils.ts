@@ -28,7 +28,7 @@ export const getBootLoaderPartitionData = (bootloader: BootLoader, path: string)
     fsType: bootloader === 'grub' ? 'ext4' : 'fat32',
     size: 513,
     start: 1,
-    path: path.concat('1'),
+    path: path.concat('1')
   });
 
 export const getPrimaryPartitionData = (partitionData: {
@@ -70,7 +70,7 @@ export const getPrimaryPartitionData = (partitionData: {
     },
     status: 'create',
     type: 'primary'
-  };
+  } as Partition;
 };
 
 const mountPoint = (flag: string): string => {

@@ -25,7 +25,7 @@ export const i18n = defineStore('i18n', () => {
   }
 
   function $t(key: string): string {
-    console.info( localeMessages.value);
+    console.info(localeMessages.value);
     return eval(`localeMessages.value.${key}`) || key;
   }
 
