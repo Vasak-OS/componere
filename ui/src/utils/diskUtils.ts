@@ -22,12 +22,13 @@ export const bytesToMB = (bytes: number): number => {
   return bytes / 1024 / 1024;
 };
 
-export const getBootLoaderPartitionData = (bootloader: BootLoader): Partition =>
+export const getBootLoaderPartitionData = (bootloader: BootLoader, path: string): Partition =>
   getPrimaryPartitionData({
     name: 'Boot',
     fsType: bootloader === 'grub' ? 'ext4' : 'fat32',
     size: 513,
-    start: 1
+    start: 1,
+    path: path.concat('1'),
   });
 
 export const getPrimaryPartitionData = (partitionData: {
@@ -35,12 +36,13 @@ export const getPrimaryPartitionData = (partitionData: {
   fsType: string;
   size: number;
   start: number;
+  path: string;
 }): Partition => {
   return {
     btrfs: [],
     flags: (partitionData.name as DiskFlags) == 'Boot' ? [partitionData.name as DiskFlags] : [],
     fs_type: partitionData.fsType as FileSystemType,
-    dev_path: '/dev/sda',
+    dev_path: partitionData.path,
     size: {
       sector_size: {
         sector_size: null,
@@ -54,7 +56,7 @@ export const getPrimaryPartitionData = (partitionData: {
     },
     mount_options: [],
     mountpoint: mountPoint(partitionData.name),
-    obj_id: '',
+    obj_id: null,
     start: {
       sector_size: {
         sector_size: null,
@@ -88,12 +90,19 @@ export const presetDiskPartition = (partitionData: {
   bootloader: BootLoader;
   swapSize: number;
   diskSize: number;
+  path: string;
 }): Array<Partition> => {
   const partitions: Array<Partition> = [];
-  partitions.push(getBootLoaderPartitionData(partitionData.bootloader));
+  partitions.push(getBootLoaderPartitionData(partitionData.bootloader, partitionData.path));
   const rootSize = partitionData.diskSize - 513 - partitionData.swapSize;
   partitions.push(
-    getPrimaryPartitionData({ name: 'Root', fsType: 'ext4', size: rootSize, start: 513 })
+    getPrimaryPartitionData({
+      name: 'Root',
+      fsType: 'ext4',
+      size: rootSize,
+      start: 513,
+      path: partitionData.path.concat('2')
+    })
   );
   if (partitionData.swapSize > 0) {
     partitions.push(
@@ -101,7 +110,8 @@ export const presetDiskPartition = (partitionData: {
         name: 'Swap',
         fsType: 'swap',
         size: partitionData.swapSize,
-        start: rootSize + 513
+        start: rootSize + 513,
+        path: partitionData.path.concat('3')
       })
     );
   }
